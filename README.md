@@ -35,8 +35,7 @@ While the kit provided a solid foundation, it also presented several challenges:
 
 As the project evolved, we continuously modified the original design to better meet the competition's requirements, improving the mechanical structure, electronics integration, and overall reliability.
 
-For future iterations, we plan to redesign the bottom chassis plate to provide additional clearance for the steering mechanism, allowing a greater steering angle and improved maneuverability during the Obstacle Challenge.
-
+For future iterations, we plan to redesign the bottom chassis plate to improve the overall structure of the robot. The new design will provide additional clearance for the steering mechanism, enabling a larger steering angle and improved maneuverability during the Obstacle Challenge. Additionally, we aim to make the chassis more modular and accessible, simplifying the assembly and disassembly process while making maintenance and future upgrades easier.
 # Hardware Design
 ## Chassis
 
@@ -149,5 +148,5 @@ The camera is one of the most important components for navigation, requiring a s
   <em>Custom Pi Camera mount positioned at the front of the robot.</em>
 </p>
 
-The mount secures the Pi Camera using screws and includes an opening for the lens, ensuring clear vision. The camera is placed at the front of the robot to maximize visibility and improve obstacle detection during autonomous navigation.
+The mount secures the Pi Camera using screws and includes an opening for the lens, ensuring clear vision. The camera is placed at the front of the robot to maximize visibility and improve obstacle detection during autonomous navigation. It is worth noting that the **"SN"** engraved on our mounts refers to our team name, **Sunbird Nomads**.
 
