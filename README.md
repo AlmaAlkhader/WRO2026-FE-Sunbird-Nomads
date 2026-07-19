@@ -55,17 +55,17 @@ After identifying all the required electronic components and taking precise meas
 <table align="center">
   <tr>
     <td align="center">
-      <img src="image-2.png" alt="Early plate design" width="300" height="300"><br>
+      <img src="image-2.png" alt="Middle PLate" width="300" height="300"><br>
       <em>Early prototype</em>
     </td>
     <td align="center">
-      <img src="image-3.png" alt="Final plate design" width="300" height="300"><br>
+      <img src="image-3.png" alt="Top plate" width="300" height="300"><br>
       <em>Final design</em>
     </td>
   </tr>
 </table>
 
 <p align="center">
-  <em>Middles and top layer plates</em>
+  <em>Middle and top layer plates</em>
 </p>
 
