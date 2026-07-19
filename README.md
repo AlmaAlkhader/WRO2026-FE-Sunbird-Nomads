@@ -52,10 +52,20 @@ To overcome this limitation, we designed a completely new **top mounting plate**
 
 After identifying all the required electronic components and taking precise measurements, we designed a custom mounting plate tailored to our needs. The design went through **four iterations**, with each version improving the placement of components, cable management, and accessibility until we reached the final design.
 
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="image-2.png" alt="Early plate design" width="300" height="300"><br>
+      <em>Early prototype</em>
+    </td>
+    <td align="center">
+      <img src="image-3.png" alt="Final plate design" width="300" height="300"><br>
+      <em>Final design</em>
+    </td>
+  </tr>
+</table>
+
 <p align="center">
-  <img src="image-2.png" alt="Early plate design" width="45%"/>
-  <img src="image-3.png" alt="Final plate design" width="45%"/>
-  <br>
-  <em>Evolution of our custom top plate—from an early prototype (left) to the final design (right).</em>
+  <em>Middles and top layer plates</em>
 </p>
 
