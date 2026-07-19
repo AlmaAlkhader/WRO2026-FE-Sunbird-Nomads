@@ -37,3 +37,25 @@ As the project evolved, we continuously modified the original design to better m
 
 For future iterations, we plan to redesign the bottom chassis plate to provide additional clearance for the steering mechanism, allowing a greater steering angle and improved maneuverability during the Obstacle Challenge.
 
+## Hardware Design
+# Chassis
+
+Our robot is based on the **4WD Arduino RC Car Chassis**, which provided a solid mechanical foundation. However, the original design offered very little space for the electronics required for the competition.
+
+To overcome this limitation, we designed a completely new **top mounting plate** and added an **additional layer** to accommodate all of the robot's electronic components while maintaining a compact and organized layout.
+
+<p align="center">
+  <img src="image.png" alt="Original 4WD Arduino RC Car Chassis" width="500"/>
+  <br>
+  <em>Original 4WD Arduino RC Car Chassis used as the base of our robot.</em>
+</p>
+
+After identifying all the required electronic components and taking precise measurements, we designed a custom mounting plate tailored to our needs. The design went through **four iterations**, with each version improving the placement of components, cable management, and accessibility until we reached the final design.
+
+<p align="center">
+  <img src="image-2.png" alt="Early plate design" width="45%"/>
+  <img src="image-3.png" alt="Final plate design" width="45%"/>
+  <br>
+  <em>Evolution of our custom top plate—from an early prototype (left) to the final design (right).</em>
+</p>
+
