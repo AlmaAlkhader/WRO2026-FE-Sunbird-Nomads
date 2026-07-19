@@ -69,3 +69,44 @@ After identifying all the required electronic components and taking precise meas
   <em>Middle and top layer plates</em>
 </p>
 
+## Steering Calibration
+
+One advantage of the chassis kit we used is that it allows adjustments to the steering geometry by changing the lengths of the steering rods. We utilized this flexibility to implement an **Ackermann steering mechanism**, where the inner wheel turns at a greater angle than the outer wheel during cornering.
+
+<p align="center">
+  <img src="image-6.png" alt="Ackermann steering mechanism" width="500"/>
+</p>
+
+This difference in steering angles is necessary because the inner and outer wheels follow different turning radii. The inner wheel travels along a smaller radius, requiring a larger steering angle to ensure that all wheels rotate around the same instantaneous center of rotation.
+
+To determine the required steering angle for **low-speed cornering**, where tire slip can be neglected, we used the following relationship:
+
+```text
+δ = atan(L / R)
+```
+
+Where:
+
+```text
+δ = steering angle of the vehicle centerline
+L = wheelbase
+R = turning radius
+```
+
+For our robot, we measured:
+
+```text
+L = 137 mm
+R = 525 mm
+```
+
+Substituting these values:
+
+```text
+δ = atan(137 / 525)
+δ = 14.6°
+```
+
+After converting the result from radians to degrees, the required steering angle was approximately **15°**.
+
+We then calibrated the steering mechanism by adjusting the steering rods until the wheels achieved the desired Ackermann geometry, with approximately a **15° steering angle** for the centerline turn.
