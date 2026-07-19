@@ -39,7 +39,7 @@ For future iterations, we plan to redesign the bottom chassis plate to improve t
 # Hardware Design
 ## Chassis
 
-Our robot is based on the **4WD Arduino RC Car Chassis**, which provided a solid mechanical foundation. However, the original design offered very little space for the electronics required for the competition.
+Our robot is based on the **4WD Arduino RC Car Chassis**, which provided a solid mechanical foundation, offering rear wheel drive. However, the original design offered very little space for the electronics required for the competition.
 
 To overcome this limitation, we designed a completely new **top mounting plate** and added an **additional layer** to accommodate all of the robot's electronic components while maintaining a compact and organized layout.
 
