@@ -110,3 +110,44 @@ Substituting these values:
 After converting the result from radians to degrees, the required steering angle was approximately **15°**.
 
 We then calibrated the steering mechanism by adjusting the steering rods until the wheels achieved the desired Ackermann geometry, with approximately a **15° steering angle** for the centerline turn.
+
+## Mounts
+
+To ensure reliable performance during the competition, important components such as the **Pi Camera** and distance sensors required custom-designed mounts to keep them securely positioned while maintaining accessibility and accuracy.
+
+### ToF Sensor Mount — Initial Design
+
+Our first approach was to use **Time-of-Flight (ToF) sensors** for obstacle detection. After several design iterations, we developed a dedicated mount that provided a stable position and proper alignment for the sensors.
+
+<p align="center">
+  <img src="image-8.png" alt="ToF sensor mount design" width="500"/>
+  <br>
+  <em>Initial ToF sensor mount design.</em>
+</p>
+
+However, during testing, we discovered that ToF sensors were not ideal for the WRO mat environment. Their infrared-based measurements were significantly affected by the absorption properties of black surfaces, reducing their reliability near dark walls and obstacles.
+
+### Ultrasonic Sensor Mount — Final Design
+
+After evaluating different sensor options, we switched to **ultrasonic sensors**, which required a new mounting solution.
+
+<p align="center">
+  <img src="image-9.png" alt="Ultrasonic sensor mount design" width="500"/>
+  <br>
+  <em>Final ultrasonic sensor mount design.</em>
+</p>
+
+This design uses a **friction-fit mechanism** to securely hold the sensor in place, eliminating the need for screws while making installation and adjustments faster and easier.
+
+### Pi Camera Mount
+
+The camera is one of the most important components for navigation, requiring a stable and precise mounting position. We designed a dedicated mount that keeps the camera firmly fixed while providing an unobstructed field of view for the lens.
+
+<p align="center">
+  <img src="image-10.png" alt="Pi Camera mount design" width="500"/>
+  <br>
+  <em>Custom Pi Camera mount positioned at the front of the robot.</em>
+</p>
+
+The mount secures the Pi Camera using screws and includes an opening for the lens, ensuring clear vision. The camera is placed at the front of the robot to maximize visibility and improve obstacle detection during autonomous navigation.
+
