@@ -24,7 +24,7 @@ By the local competition on **July 13, 2026**, our robot had evolved significant
 
 We are proud of our progress, but we know there is still plenty of room for improvement. We look forward to continuing our journey and pushing our robot even further.
 
-# Design Strategy
+## Design Strategy
 
 Our robot is built on a **4WD Arduino RC car chassis**, which we chose as a reliable starting point that allowed us to focus on developing and improving the robot for the WRO Future Engineers competition.
 
@@ -37,8 +37,8 @@ As the project evolved, we continuously modified the original design to better m
 
 For future iterations, we plan to redesign the bottom chassis plate to provide additional clearance for the steering mechanism, allowing a greater steering angle and improved maneuverability during the Obstacle Challenge.
 
-## Hardware Design
-# Chassis
+# Hardware Design
+## Chassis
 
 Our robot is based on the **4WD Arduino RC Car Chassis**, which provided a solid mechanical foundation. However, the original design offered very little space for the electronics required for the competition.
 
