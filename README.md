@@ -55,7 +55,7 @@ After identifying all the required electronic components and taking precise meas
 <table align="center">
   <tr>
     <td align="center">
-      <img src="image-2.png" alt="Middle PLate" width="300" height="300"><br>
+      <img src="image-4.png" alt="Middle PLate" width="300" height="300"><br>
       <em>Early prototype</em>
     </td>
     <td align="center">
