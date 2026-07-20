@@ -225,7 +225,7 @@ This section distinguishes between **verified configuration**, **manufacturer sp
 ```mermaid
 flowchart TD
     B["3S 18500 battery pack"] --> S1["Drive power switch"]
-    S1 --> H["Kit H-bridge"]
+    S1 --> H["H-bridge"]
     H --> M["12 V kit drive motor"]
     H --> V5["H-bridge module 5 V terminal"]
     V5 --> SV["Steering servo"]
@@ -566,7 +566,7 @@ Early in the season we scoped an ambitious electrical architecture. Most of it d
 
 | Subsystem | Original plan | What we're actually running | Why it changed |
 |---|---|---|---|
-| Motor driver | BTS7960 (high-current) | Kit H-bridge, reported as L928N; exact marking pending | The simpler driver reduced wiring complexity; loaded current, voltage drop, and temperature still need verification |
+| Motor driver | BTS7960 (high-current) | H-bridge, reported as L928N; exact marking pending | The simpler driver reduced wiring complexity; loaded current, voltage drop, and temperature still need verification |
 | Distance sensing | 3× VL53L0X ToF via TCA9548A multiplexer | 1× rear VL53L0X + 2× ultrasonic (left/right) | The multiplexed ToF setup failed to initialize reliably over I²C, *and separately* ToF readings proved unreliable near the mat's black surfaces — two independent reasons pointing the same direction |
 | Orientation sensing | MPU6050 IMU | Not present | Cut for now to reduce integration surface while the core drive loop was still being stabilized |
 | Power | Protected 3S pack, dual-pack rotation, BMS, two buck converters (5 V logic / 5.5 V servo) | 3S 18500 pack + USB-C power bank (Pi), servo supplied from the H-bridge module's 5 V terminal | Separate motor/Pi sources reduce conducted noise, but the present unprotected cell pack and unverified servo rail remain high-priority risks |
