@@ -352,7 +352,7 @@ $$W_{US}=2d\tan(15^\circ/2)$$
 | 50 cm | 13.2 cm |
 | 100 cm | 26.3 cm |
 
-This explains why an angled wall, corner, wheel, or nearby mount can become the strongest reflector even when it is not directly in front of the sensor. The VL53L0X bare sensor has a specified **25° field of view**, producing an approximate 4.4 cm footprint at 10 cm and 8.9 cm at 20 cm. Its narrower short-range footprint supports the rear parking role.
+Ultrasonic sensors detect objects across a wide area, so they may sometimes pick up nearby wheels, mounts, corners, or angled walls instead of the intended wall. The rear VL53L0X sensor observes a smaller area, making it more suitable for precise parking-distance measurements.
 
 ### Ultrasonic Timing and Crosstalk Control
 
