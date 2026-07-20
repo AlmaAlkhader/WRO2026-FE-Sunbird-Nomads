@@ -30,7 +30,7 @@ An autonomous vehicle engineered through testing, failure, redesign, and continu
 | [`docs/`](docs/) | Engineering diagrams and detailed investigations |
 
 ---
-## 🐦 Why “Sunbird Nomads”?
+##  Why “Sunbird Nomads”?
 
 The **Palestine sunbird** is a small, colourful bird native to our region and recognized as the national bird of Palestine. For Palestinians, it represents our land, identity, freedom, and resilience.
 
@@ -43,7 +43,7 @@ Together, **Sunbird Nomads** represents a Palestinian team deeply rooted in its 
 
 We are **Alma Alkhader** and **Sara Afifi**, two second-year engineering students at Birzeit University brought together by a shared interest in robotics. This is our second year competing in the WRO Future Engineers category. Our experience began with our [WRO 2025 BiruniVerse project](https://github.com/AlmaAlkhader/WRO2025-BiruniVerse), where we gained our first practical experience designing, building, and programming an autonomous vehicle.
 
-### 👩‍🔧 Meet the Team
+###  Meet the Team
 
 <table>
   <tr>
