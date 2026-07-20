@@ -86,6 +86,12 @@ We are **Alma Alkhader** and **Sara Afifi**, two second-year engineering student
 
 Our different specializations allowed us to approach the robot from two connected perspectives. Alma concentrated on making the electronics and software work reliably, while Sara focused on ensuring that the mechanical design could support those systems and move effectively. Nearly every improvement required both sides to work together.
 
+<p align="center">
+  <img src="docs/two-paths-one-robot.svg" alt="Alma's electronics path and Sara's mechanical-design path joining into one robot engineering journey" width="1000"/>
+  <br>
+  <em>Two specializations developed together through every prototype, redesign, and milestone.</em>
+</p>
+
 Our first robot of the 2026 season came to life on **May 19, 2026**, powered by an ESP32. Although it completed the Open Challenge, it still faced major issues with steering, power delivery, and the rear axle. Over the following weeks, we redesigned and improved these systems while balancing the project with our university exams and coursework.
 
 By the local competition on **July 13, 2026**, the robot had evolved significantly. After moving from the ESP32 to a Raspberry Pi and making several mechanical and electrical improvements, it achieved the maximum score in the Open Challenge. We earned **second place** and qualified for the national competition.
