@@ -17,7 +17,7 @@ An autonomous vehicle engineered through testing, failure, redesign, and continu
 
 ---
 
-## 📚 Repository Contents
+##  Repository Contents
 
 | Folder | Contents |
 |---|---|
@@ -31,17 +31,46 @@ An autonomous vehicle engineered through testing, failure, redesign, and continu
 
 ---
 
-## 🌍 Our Journey
+## Our Journey
 
 We are **Alma Alkhader** and **Sara Afifi**, two second-year engineering students at Birzeit University brought together by a shared interest in robotics. This is our second year competing in the WRO Future Engineers category. Our experience began with our [WRO 2025 BiruniVerse project](https://github.com/AlmaAlkhader/WRO2025-BiruniVerse), where we gained our first practical experience designing, building, and programming an autonomous vehicle.
 
-### 👩‍💻 Alma Alkhader — Computer Engineering
+### 👩‍🔧 Meet the Team
 
-Alma is a second-year Computer Engineering student and a member of the **IEEE Robotics and Automation Society (RAS)** at the Birzeit University Student Branch. Her strong interest in robotics led her to focus on the robot’s electronics, power system, wiring, Raspberry Pi setup, sensor integration, and control software.
-
-### ⚙️ Sara Afifi — Mechanical Engineering
-
-Sara is a second-year Mechanical Engineering student and a technical member of **IMechE at Birzeit University**. She led the robot’s mechanical development, including the chassis modifications, steering mechanism, component placement, measurements, and custom-designed mounts.
+<table>
+  <tr>
+    <th width="50%">Alma Alkhader</th>
+    <th width="50%">Sara Afifi</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="t-photos/alma-alkhader.jpg"
+           alt="Alma Alkhader"
+           width="280">
+    </td>
+    <td align="center">
+      <img src="t-photos/sara-afifi.jpg"
+           alt="Sara Afifi"
+           width="280">
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <strong>Occupation:</strong> Computer Engineering student<br><br>
+      <strong>Academic level:</strong> Second year<br><br>
+      <strong>Membership:</strong> IEEE Robotics and Automation Society (RAS), Birzeit University Student Branch<br><br>
+      <strong>Interest:</strong> Robotics and autonomous systems<br><br>
+      <strong>Team responsibilities:</strong> Power system, electronics, wiring, sensor integration, Raspberry Pi setup, and control software
+    </td>
+    <td valign="top">
+      <strong>Occupation:</strong> Mechanical Engineering student<br><br>
+      <strong>Academic level:</strong> Second year<br><br>
+      <strong>Membership:</strong> Technical member of IMechE at Birzeit University<br><br>
+      <strong>Specialization:</strong> Mechanical design and manufacturing<br><br>
+      <strong>Team responsibilities:</strong> Chassis development, steering mechanism, component placement, measurements, and custom-designed mounts
+    </td>
+  </tr>
+</table>
 
 Our different specializations allowed us to approach the robot from two connected perspectives. Alma concentrated on making the electronics and software work reliably, while Sara focused on ensuring that the mechanical design could support those systems and move effectively. Nearly every improvement required both sides to work together.
 
