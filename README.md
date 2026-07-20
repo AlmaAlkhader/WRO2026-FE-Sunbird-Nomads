@@ -1,4 +1,10 @@
-<h1 align="center"> Sunbird Nomads</h1>
+<p align="center">
+  <img src="docs/sunbird-nomads-logo.png"
+       alt="Sunbird Nomads team logo"
+       width="300">
+</p>
+
+<h1 align="center">🐦 Sunbird Nomads</h1>
 
 <h3 align="center">
 WRO 2026 Future Engineers · Palestine 🇵🇸
