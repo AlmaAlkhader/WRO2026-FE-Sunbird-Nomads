@@ -240,10 +240,7 @@ We're not presenting the original plan as a mistake — it was the correct engin
 **1. ToF sensors were the wrong tool for this mat, twice over.**
 Our first plan used three ToF sensors sharing one connection through a multiplexer chip. That setup never worked reliably. Separately, we also found that even a single, correctly-working ToF sensor struggled near the mat's black surfaces — it measures distance by reflecting infrared light, and black absorbs infrared instead of bouncing it back. Two different problems, same answer: we switched to ultrasonic sensors, which use sound instead of light and don't care what color the wall is.
 
-**2. The camera still doesn't work — and we're documenting that honestly.**
-Our camera was working, then stopped. We tried the standard fixes — reseating the ribbon cable, swapping it end-for-end, adjusting the boot configuration, restarting the Pi from cold — and none of it brought it back. Rather than lose more time chasing it, we made a deliberate call: build and test everything else without the camera for now, and come back to it with fresh ideas later. *(Full diagnostic log for anyone curious: [`docs/camera-investigation.md`](docs/camera-investigation.md).)*
-
-**3. A live wiring mistake, caught before it became a bigger one.**
+**2. A live wiring mistake, caught before it became a bigger one.**
 One ultrasonic sensor was briefly wired backwards (power and ground reversed) and started heating up. We caught it, disconnected it immediately, and rewired it correctly — it's worked fine since, though we're keeping an eye on it. This is exactly why we treat "every ground wire shares one common rail" as a hard rule everywhere else in this README — it's not caution for caution's sake, it's a lesson from something that actually almost went wrong.
 
 ### The pattern across all three
