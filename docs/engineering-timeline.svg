@@ -1,0 +1,85 @@
+<svg viewBox="0 0 1200 620" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="1200" height="620" fill="#ffffff"/>
+
+  <text x="40" y="42" font-size="22" font-weight="700" fill="#1a1a2e">Engineering Journey — Sunbird Nomads</text>
+  <text x="40" y="64" font-size="13" fill="#666">Six decisions, in order, each driven by a test result or a failure</text>
+
+  <!-- Timeline spine -->
+  <line x1="90" y1="330" x2="1110" y2="330" stroke="#ccc" stroke-width="3"/>
+
+  <!-- Node positions -->
+  <!-- 1: May 19 - ESP32 first robot (above) -->
+  <circle cx="140" cy="330" r="8" fill="#d62828"/>
+  <line x1="140" y1="322" x2="140" y2="230" stroke="#d62828" stroke-width="2"/>
+  <rect x="40" y="110" width="200" height="120" rx="10" fill="#fde8e8" stroke="#d62828" stroke-width="1.5"/>
+  <text x="140" y="135" font-size="12" font-weight="700" text-anchor="middle" fill="#7a1414">May 19, 2026</text>
+  <text x="140" y="155" font-size="12.5" font-weight="700" text-anchor="middle" fill="#7a1414">First robot alive</text>
+  <text x="140" y="175" font-size="11" text-anchor="middle" fill="#7a1414">ESP32-powered robot.</text>
+  <text x="140" y="191" font-size="11" text-anchor="middle" fill="#7a1414">Completed the Open</text>
+  <text x="140" y="207" font-size="11" text-anchor="middle" fill="#7a1414">Challenge, but had</text>
+  <text x="140" y="223" font-size="11" text-anchor="middle" fill="#7a1414">steering &amp; power issues.</text>
+
+  <!-- 2: ToF -> Ultrasonic (below) -->
+  <circle cx="360" cy="330" r="8" fill="#1d9e75"/>
+  <line x1="360" y1="338" x2="360" y2="410" stroke="#1d9e75" stroke-width="2"/>
+  <rect x="260" y="410" width="200" height="130" rx="10" fill="#e3f5ee" stroke="#1d9e75" stroke-width="1.5"/>
+  <text x="360" y="435" font-size="12" font-weight="700" text-anchor="middle" fill="#0f5c40">Mid-season</text>
+  <text x="360" y="455" font-size="12.5" font-weight="700" text-anchor="middle" fill="#0f5c40">ToF &#8594; ultrasonic</text>
+  <text x="360" y="475" font-size="11" text-anchor="middle" fill="#0f5c40">Infrared ToF readings were</text>
+  <text x="360" y="491" font-size="11" text-anchor="middle" fill="#0f5c40">unreliable near the mat's</text>
+  <text x="360" y="507" font-size="11" text-anchor="middle" fill="#0f5c40">black surfaces. Switched to</text>
+  <text x="360" y="523" font-size="11" text-anchor="middle" fill="#0f5c40">ultrasonic — immune to that.</text>
+
+  <!-- 3: Camera investigation (above) -->
+  <circle cx="580" cy="330" r="8" fill="#7b4fb0"/>
+  <line x1="580" y1="322" x2="580" y2="230" stroke="#7b4fb0" stroke-width="2"/>
+  <rect x="480" y="110" width="200" height="120" rx="10" fill="#f2e9fb" stroke="#7b4fb0" stroke-width="1.5"/>
+  <text x="580" y="135" font-size="12" font-weight="700" text-anchor="middle" fill="#4a2c73">Mid-season</text>
+  <text x="580" y="155" font-size="12.5" font-weight="700" text-anchor="middle" fill="#4a2c73">Camera investigation</text>
+  <text x="580" y="175" font-size="11" text-anchor="middle" fill="#4a2c73">IMX219 stopped responding.</text>
+  <text x="580" y="191" font-size="11" text-anchor="middle" fill="#4a2c73">Ribbon reseated, swapped,</text>
+  <text x="580" y="207" font-size="11" text-anchor="middle" fill="#4a2c73">overlays tried. Root cause</text>
+  <text x="580" y="223" font-size="11" text-anchor="middle" fill="#4a2c73">unresolved &#8212; excluded now.</text>
+
+  <!-- 4: July 13 Local competition (below) -->
+  <circle cx="800" cy="330" r="8" fill="#f4a300"/>
+  <line x1="800" y1="338" x2="800" y2="410" stroke="#f4a300" stroke-width="2"/>
+  <rect x="700" y="410" width="200" height="130" rx="10" fill="#fdf3d8" stroke="#c98a00" stroke-width="1.5"/>
+  <text x="800" y="435" font-size="12" font-weight="700" text-anchor="middle" fill="#7a5200">July 13, 2026</text>
+  <text x="800" y="455" font-size="12.5" font-weight="700" text-anchor="middle" fill="#7a5200">Local competition</text>
+  <text x="800" y="475" font-size="11" text-anchor="middle" fill="#7a5200">Now Pi-powered. Max score</text>
+  <text x="800" y="491" font-size="11" text-anchor="middle" fill="#7a5200">in the Open Challenge.</text>
+  <text x="800" y="507" font-size="11" text-anchor="middle" fill="#7a5200">2nd place &#8212; qualified for</text>
+  <text x="800" y="523" font-size="11" text-anchor="middle" fill="#7a5200">the national round.</text>
+
+  <!-- 5: July 19 Handoff doc (above) -->
+  <circle cx="1000" cy="330" r="8" fill="#1d63c9"/>
+  <line x1="1000" y1="322" x2="1000" y2="230" stroke="#1d63c9" stroke-width="2"/>
+  <rect x="900" y="110" width="200" height="120" rx="10" fill="#e7f0fb" stroke="#1d63c9" stroke-width="1.5"/>
+  <text x="1000" y="135" font-size="12" font-weight="700" text-anchor="middle" fill="#123a6b">July 19, 2026</text>
+  <text x="1000" y="155" font-size="12.5" font-weight="700" text-anchor="middle" fill="#123a6b">Technical handoff</text>
+  <text x="1000" y="175" font-size="11" text-anchor="middle" fill="#123a6b">Common ground fixed across</text>
+  <text x="1000" y="191" font-size="11" text-anchor="middle" fill="#123a6b">every sub-circuit. GPIO</text>
+  <text x="1000" y="207" font-size="11" text-anchor="middle" fill="#123a6b">pin table verified by</text>
+  <text x="1000" y="223" font-size="11" text-anchor="middle" fill="#123a6b">continuity &amp; voltage test.</text>
+
+  <!-- 6: Now (below) -->
+  <circle cx="1080" cy="330" r="8" fill="#d85a30"/>
+  <line x1="1080" y1="338" x2="1080" y2="410" stroke="#d85a30" stroke-width="2"/>
+  <rect x="980" y="410" width="200" height="110" rx="10" fill="#faece7" stroke="#d85a30" stroke-width="1.5"/>
+  <text x="1080" y="435" font-size="12" font-weight="700" text-anchor="middle" fill="#712b13">Now</text>
+  <text x="1080" y="455" font-size="12.5" font-weight="700" text-anchor="middle" fill="#712b13">Documenting &amp; testing</text>
+  <text x="1080" y="475" font-size="11" text-anchor="middle" fill="#712b13">Calibration build in place.</text>
+  <text x="1080" y="491" font-size="11" text-anchor="middle" fill="#712b13">Final competition code</text>
+  <text x="1080" y="507" font-size="11" text-anchor="middle" fill="#712b13">and Obstacle Challenge next</text>
+
+  <!-- date labels on spine -->
+  <text x="140" y="350" font-size="10.5" text-anchor="middle" fill="#999">1</text>
+  <text x="360" y="350" font-size="10.5" text-anchor="middle" fill="#999">2</text>
+  <text x="580" y="350" font-size="10.5" text-anchor="middle" fill="#999">3</text>
+  <text x="800" y="350" font-size="10.5" text-anchor="middle" fill="#999">4</text>
+  <text x="1000" y="350" font-size="10.5" text-anchor="middle" fill="#999">5</text>
+  <text x="1080" y="350" font-size="10.5" text-anchor="middle" fill="#999">6</text>
+
+  <text x="40" y="590" font-size="11.5" fill="#888">Source: root README "Our Journey", the ultrasonic mount story, docs/camera investigation notes, and the 19 July technical handoff.</text>
+</svg>
