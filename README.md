@@ -86,7 +86,7 @@ Our first robot of the 2026 season came to life on **May 19, 2026**, powered by 
 
 By the local competition on **July 13, 2026**, the robot had evolved significantly. After moving from the ESP32 to a Raspberry Pi and making several mechanical and electrical improvements, it achieved the maximum score in the Open Challenge. We earned **second place** and qualified for the national competition.
 
-We are proud of how far the robot has come, but our journey is not finished. Every test, mistake, and redesign has taught us something new, and we are continuing to improve the robot as we prepare for the next stage of the competition.
+We are proud of how far the robot has come. Every test, mistake, and redesign contributed to the final architecture documented in this repository.
 
 ## Design Strategy
 
@@ -99,11 +99,12 @@ While the kit provided a solid foundation, it also presented several challenges:
 
 As the project evolved, we continuously modified the original design to better meet the competition's requirements, improving the mechanical structure, electronics integration, and overall reliability.
 
-For future iterations, we plan to redesign the bottom chassis plate to improve the overall structure of the robot. The new design will provide additional clearance for the steering mechanism, enabling a larger steering angle and improved maneuverability during the Obstacle Challenge. Additionally, we aim to make the chassis more modular and accessible, simplifying the assembly and disassembly process while making maintenance and future upgrades easier.
 # Hardware Design
 ## Chassis
 
-Our robot is based on the **4WD Arduino RC Car Chassis**, which provided a solid mechanical foundation, offering rear wheel drive. However, the original design offered very little space for the electronics required for the competition.
+Our robot is based on the [**RoboticX 4WD RC Smart Car Chassis with S3003 Servo and Bearing Kit**](https://roboticx.ps/product/4wd-rc-smart-car-chassis-with-s3003-metal-servo-bearing-kit-for-arduino/). The seller lists the assembled chassis as **248 × 146 × 70 mm** and **680 g**, with rear-wheel drive, one **S3003 steering servo**, and one **25 mm all-metal gearmotor**. The chassis provided a solid mechanical foundation, but its original layout offered very little space for the electronics required for the competition.
+
+The [**L298N dual motor-controller module**](https://roboticx.ps/product/dual-motor-controller-module-l298n/) was purchased separately and is not included in the chassis package.
 
 To overcome this limitation, we designed a completely new **top mounting plate** and added an **additional layer** to accommodate all of the robot's electronic components while maintaining a compact and organized layout.
 
@@ -220,23 +221,39 @@ Our electrical design separates the noisy, high-current drive system from the Ra
 
 This section uses the robot's confirmed configuration, values recovered from our project records, and manufacturer specifications. No unrecorded measurement is presented as a test result.
 
+## Main Electrical Components
+
+<table align="center">
+  <tr>
+    <td align="center" width="33%">
+      <img src="docs/components/18500-li-ion-cell.jpg" alt="18500 lithium-ion battery cell" width="250"><br>
+      <strong>3 × 18500 Li-ion cells</strong><br>
+      <sub>3.7 V, 2250 mAh per cell</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/components/l298n.png" alt="L298N motor-controller module" width="250"><br>
+      <strong>L298N motor controller</strong><br>
+      <sub>Purchased separately from the chassis</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/components/chassis-kit-motor-servo.jpg" alt="Chassis kit containing S3003 servo and 25 millimetre gearmotor" width="250"><br>
+      <strong>S3003 servo + 25 mm gearmotor</strong><br>
+      <sub>Supplied with the RoboticX chassis</sub>
+    </td>
+  </tr>
+</table>
+
+<p align="center">
+  <sub>Component sources: team battery record and the RoboticX <a href="https://roboticx.ps/product/dual-motor-controller-module-l298n/">L298N</a> and <a href="https://roboticx.ps/product/4wd-rc-smart-car-chassis-with-s3003-metal-servo-bearing-kit-for-arduino/">chassis-kit</a> listings.</sub>
+</p>
+
 ## System Architecture
 
-```mermaid
-flowchart TD
-    B["3S 18500 battery pack"] --> S1["Drive power switch"]
-    S1 --> H["H-bridge"]
-    H --> M["12 V JGA25-370 gearmotor"]
-    H --> V5["H-bridge module 5 V terminal"]
-    V5 --> SV["Futaba S3003 steering servo"]
-
-    PB["Billboard 10,000 mAh power bank<br/>5 V / 3 A output"] --> PI["Raspberry Pi 4"]
-    PI --> CAM["Arducam 12 MP IMX708 camera"]
-    PI --> US["Left and right ultrasonic sensors"]
-    PI --> TOF["Rear VL53L0X parking sensor"]
-    PI -- "PWM and direction" --> H
-    PI -- "PWM signal" --> SV
-```
+<p align="center">
+  <img src="docs/power-distribution.svg" alt="Power and control distribution diagram" width="900"/>
+  <br>
+  <em>Confirmed power paths, connected loads, control signals, and shared ground.</em>
+</p>
 
 The power switch energizes the drive system. A separate start control launches the autonomous program, allowing the robot to be powered and checked before motion begins.
 
@@ -246,8 +263,8 @@ The power switch energizes the drive system. A separate start control launches t
 |---|---|---|
 | 3S motor pack | L298N H-bridge, drive motor, servo rail | 3 × 18500 Li-ion cells, each labelled 3.7 V and 2250 mAh |
 | USB power bank | Raspberry Pi 4, camera, and Pi-side sensors | Billboard 10,000 mAh, 5 V / 3 A output |
-| L298N motor output | JGA25-370 12 V gearmotor | PWM speed and direction control |
-| H-bridge module 5 V terminal | Futaba S3003 steering servo | Servo power and ground; control signal from Raspberry Pi GPIO12 |
+| L298N motor output | 25 mm all-metal gearmotor | PWM speed and direction control |
+| H-bridge module 5 V terminal | S3003 steering servo | Servo power and ground; control signal from Raspberry Pi GPIO12 |
 | Raspberry Pi 3.3 V and GPIO | Ultrasonic and ToF sensor logic | Common ground through the breadboard negative rail |
 
 The Raspberry Pi 4 requires a good-quality **5 V, 3 A** USB-C supply according to its [official datasheet](https://pip.raspberrypi.com/documents/RP-008341-DS-raspberry-pi-4-datasheet.pdf). The power bank's labelled output matches that supply requirement.
@@ -263,11 +280,11 @@ Pack capacity = 2.25 Ah
 Nominal stored energy = 11.1 V × 2.25 Ah = 24.975 Wh ≈ 25.0 Wh
 ```
 
-The motor is sold as part of a 12 V robot kit, so a 3S lithium-ion pack is electrically close to its intended voltage range: approximately 12.6 V when full and 11.1 V at nominal charge. The actual voltage reaching the motor is lower because the H-bridge has an internal voltage drop.
+The 3S pack therefore supplies approximately **12.6 V when fully charged** and **11.1 V at nominal charge**. The voltage reaching the motor is lower because the L298N has an internal voltage drop.
 
 ### H-Bridge Trade-off and Voltage Loss
 
-Our project records identify the motor driver as an **L298N dual H-bridge**.
+The installed driver is the separately purchased [**RoboticX L298N dual motor-controller module**](https://roboticx.ps/product/dual-motor-controller-module-l298n/). Its seller specifications list a **6–15 V motor-supply range**, **4.5–5.5 V logic range**, **2 A maximum drive current**, and **0–100% output duty cycle**.
 
 The [STMicroelectronics L298 datasheet](https://www.st.com/resource/en/datasheet/l298.pdf) specifies a total bridge saturation-voltage drop of approximately **1.8 V typical and up to 3.2 V at 1 A**. At a nominal 11.1 V pack voltage:
 
@@ -289,14 +306,15 @@ This older bipolar driver is simple and readily available, but it sacrifices mot
 
 ## Documented Electrical Load Data
 
-| Component | Supply or rating | Documented electrical data | Source |
+| Load | Supply | Datasheet or seller value | Why it matters |
 |---|---:|---|---|
-| Raspberry Pi 4 | 5 V | 3 A recommended supply capability | [Raspberry Pi 4 datasheet](https://pip.raspberrypi.com/documents/RP-008341-DS-raspberry-pi-4-datasheet.pdf) |
-| 2 × HC-SR04 | Installed at 3.3 V | Standard reference module: 15 mA each at 5 V | [HC-SR04 datasheet](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf) |
-| VL53L0X | 2.6–3.5 V bare sensor | 19 mA typical active; up to 40 mA peak | [STMicroelectronics VL53L0X datasheet](https://www.st.com/resource/en/datasheet/vl53l0x.pdf) |
-| Futaba S3003 servo | 4.8 or 6 V | 8 mA idle at 6 V; 3.2 kg·cm torque and 0.23 s/60° at 4.8 V | [Futaba S3003 datasheet](https://futabausa.com/wp-content/uploads/2019/07/S3003.pdf) |
-| JGA25-370 gearmotor | 12 V | 70–150 mA no-load; 1.5–2.5 A stall range recorded in our [2025 component documentation](https://github.com/AlmaAlkhader/WRO2025-BiruniVerse/blob/main/README.md#dc-motor-jga25-370) | Team component record |
-| L298N H-bridge | Motor supply up to 46 V | 2 A DC per channel; 3 A non-repetitive peak per channel | [STMicroelectronics L298 datasheet](https://www.st.com/resource/en/datasheet/l298.pdf) |
+| Raspberry Pi 4 system | 5 V | 3 A recommended supply capability | Establishes the required continuous output of the USB power bank and cable |
+| Left HC-SR04-type sensor | Installed at 3.3 V | Standard HC-SR04 reference: 15 mA at 5 V | Distinguishes the installed working configuration from the standard module specification |
+| Right HC-SR04-type sensor | Installed at 3.3 V | Standard HC-SR04 reference: 15 mA at 5 V | Uses the same supply and reference as the left sensor |
+| Rear VL53L0X | Raspberry Pi sensor rail | Bare sensor: 19 mA typical active and up to 40 mA peak | Accounts for the parking sensor's load on the Pi-side rail |
+| L298N motor controller | 3S motor pack | 6–15 V motor supply, 4.5–5.5 V logic, and 2 A maximum drive current | Confirms compatibility with the motor pack and defines the controller's published current limit |
+
+Sources: [Raspberry Pi 4 datasheet](https://pip.raspberrypi.com/documents/RP-008341-DS-raspberry-pi-4-datasheet.pdf), [HC-SR04 reference sheet](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf), [STMicroelectronics VL53L0X datasheet](https://www.st.com/resource/en/datasheet/vl53l0x.pdf), and [RoboticX L298N product page](https://roboticx.ps/product/dual-motor-controller-module-l298n/).
 
 The power sources are intentionally separated: the 3S pack handles drive and steering loads, while the USB power bank isolates the Raspberry Pi and vision system from motor-current transients.
 
@@ -326,7 +344,34 @@ All grounds are joined on the breadboard negative rail. This common reference is
 | Rear VL53L0X ToF | Short-range parking alignment | Narrower optical field of view is useful for alignment with the rear parking boundary | Infrared return can depend on target reflectance, angle, and cover-glass crosstalk |
 | Arducam 12 MP IMX708 | Detect red and green traffic pillars | High-resolution colour frames support HSV segmentation and pillar-position estimation | Processing full-resolution frames increases latency; fixed focus reduces near-field sharpness |
 
+### Distance-Sensor Reference Photos
+
+<table align="center">
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/components/hc-sr04.jpg" alt="HC-SR04 ultrasonic distance sensor" width="300"><br>
+      <strong>2 × HC-SR04-type ultrasonic sensors</strong><br>
+      <sub>Left and right wall sensing</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/components/vl53l0x.jpg" alt="VL53L0X time-of-flight sensor module" width="300"><br>
+      <strong>1 × VL53L0X ToF sensor</strong><br>
+      <sub>Rear parking-distance sensing</sub>
+    </td>
+  </tr>
+</table>
+
+<p align="center">
+  <sub>Reference images: <a href="https://instock.pk/hc-sr04-ultrasonic-sensor-distance-measuring-module.html">HC-SR04</a> and <a href="https://store.fut-electronics.com/products/vl53l0x-time-of-flight-sensor-precision-distance-measurements">VL53L0X module</a>.</sub>
+</p>
+
 The ultrasonic sensors face left and right so that each one has a direct line of sight to one track wall. This placement supports wall-distance comparison and exposes the sudden open-space reading used to identify corners. The rear-facing ToF sensor is separated from this navigation pair because its role is parking clearance rather than turn detection.
+
+<p align="center">
+  <img src="docs/sensor-layout.svg" alt="Conceptual top view of the robot sensor layout" width="900"/>
+  <br>
+  <em>Conceptual top view showing each sensor's direction and role; component positions are not dimensioned.</em>
+</p>
 
 The rear ToF sensor is used specifically for **parking**, not front obstacle detection. It measures the remaining rear clearance during the final parking maneuver.
 
@@ -372,7 +417,7 @@ The installed ultrasonic sensors operate when powered from **3.3 V**, and no Ech
 
 ## Camera Hardware and Colour Pipeline
 
-The current upgrade is an **Arducam 12 MP IMX708 fixed-focus HDR camera**. Arducam specifies a maximum sensor resolution of **4608 × 2592**, a 1.4 µm pixel size, and a fixed-focus range listed as 1.5 m to infinity for this module family in its [IMX708 documentation](https://docs.arducam.com/Raspberry-Pi-Camera/Native-camera/12MP-IMX708/). The camera is used for colour detection rather than full-resolution recording.
+The installed camera is an **Arducam 12 MP IMX708 fixed-focus HDR camera**. Arducam specifies a maximum sensor resolution of **4608 × 2592**, a 1.4 µm pixel size, and a fixed-focus range listed as 1.5 m to infinity for this module family in its [IMX708 documentation](https://docs.arducam.com/Raspberry-Pi-Camera/Native-camera/12MP-IMX708/). The camera is used for colour detection rather than full-resolution recording.
 
 The existing colour-detection program uses **Picamera2** for capture and **OpenCV** for BGR-to-HSV conversion and contour detection. The currently recorded code values are:
 
@@ -489,11 +534,11 @@ Early in the season we scoped an ambitious electrical architecture. Most of it d
 |---|---|---|---|
 | Motor driver | BTS7960 (high-current) | L298N H-bridge | The simpler driver reduced wiring complexity and provides the required PWM speed and direction control |
 | Distance sensing | 3× VL53L0X ToF via TCA9548A multiplexer | 1× rear VL53L0X + 2× ultrasonic (left/right) | The multiplexed ToF setup failed to initialize reliably over I²C, *and separately* ToF readings proved unreliable near the mat's black surfaces — two independent reasons pointing the same direction |
-| Orientation sensing | MPU6050 IMU | Not present | Cut for now to reduce integration surface while the core drive loop was still being stabilized |
+| Orientation sensing | MPU6050 IMU | Not present | Removed to reduce integration complexity while stabilizing the core drive loop |
 | Power | Protected 3S pack, dual-pack rotation, BMS, two buck converters (5 V logic / 5.5 V servo) | 3S 18500 pack + USB-C power bank (Pi), servo supplied from the H-bridge module's 5 V terminal | Separate motor/Pi sources reduce conducted noise; the unprotected cell pack remains the major electrical risk |
 
 
-We're not presenting the original plan as a mistake — it was the correct engineering target. What changed is that we chose reliability and debuggability under a real deadline over sophistication we couldn't yet fully verify. That trade-off itself is the point of this section.
+We're not presenting the original plan as a mistake — it was the correct engineering target. What changed is that we chose reliability and debuggability under a real deadline over sophistication we could not fully verify. That trade-off itself is the point of this section.
 
 ### Problems encountered — and what we did about each one
 
@@ -501,7 +546,7 @@ We're not presenting the original plan as a mistake — it was the correct engin
 Our first plan used three ToF sensors sharing one connection through a multiplexer chip. That setup never worked reliably. Separately, we also found that even a single, correctly-working ToF sensor struggled near the mat's black surfaces — it measures distance by reflecting infrared light, and black absorbs infrared instead of bouncing it back. Two different problems, same answer: we switched to ultrasonic sensors, which use sound instead of light and don't care what color the wall is.
 
 **2. A live wiring mistake, caught before it became a bigger one.**
-One ultrasonic sensor was briefly wired backwards (power and ground reversed) and started heating up. We caught it, disconnected it immediately, and rewired it correctly — it's worked fine since, though we're keeping an eye on it. This is exactly why we treat "every ground wire shares one common rail" as a hard rule everywhere else in this README — it's not caution for caution's sake, it's a lesson from something that actually almost went wrong.
+One ultrasonic sensor was briefly wired backwards (power and ground reversed) and started heating up. We caught it, disconnected it immediately, and rewired it correctly; it has worked since. This is exactly why we treat "every ground wire shares one common rail" as a hard rule everywhere else in this README — it's not caution for caution's sake, it's a lesson from something that actually almost went wrong.
 
 ### The pattern across all three
 

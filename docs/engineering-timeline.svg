@@ -67,11 +67,11 @@
   <circle cx="1080" cy="330" r="8" fill="#d85a30"/>
   <line x1="1080" y1="338" x2="1080" y2="410" stroke="#d85a30" stroke-width="2"/>
   <rect x="980" y="410" width="200" height="110" rx="10" fill="#faece7" stroke="#d85a30" stroke-width="1.5"/>
-  <text x="1080" y="435" font-size="12" font-weight="700" text-anchor="middle" fill="#712b13">Now</text>
-  <text x="1080" y="455" font-size="12.5" font-weight="700" text-anchor="middle" fill="#712b13">Documenting &amp; testing</text>
-  <text x="1080" y="475" font-size="11" text-anchor="middle" fill="#712b13">Calibration build in place.</text>
-  <text x="1080" y="491" font-size="11" text-anchor="middle" fill="#712b13">Final competition code</text>
-  <text x="1080" y="507" font-size="11" text-anchor="middle" fill="#712b13">and Obstacle Challenge next</text>
+  <text x="1080" y="435" font-size="12" font-weight="700" text-anchor="middle" fill="#712b13">Final architecture</text>
+  <text x="1080" y="455" font-size="12.5" font-weight="700" text-anchor="middle" fill="#712b13">Integrated system</text>
+  <text x="1080" y="475" font-size="11" text-anchor="middle" fill="#712b13">Pi control, ultrasonic</text>
+  <text x="1080" y="491" font-size="11" text-anchor="middle" fill="#712b13">wall sensing, IMX708</text>
+  <text x="1080" y="507" font-size="11" text-anchor="middle" fill="#712b13">vision &amp; rear parking ToF</text>
 
   <!-- date labels on spine -->
   <text x="140" y="350" font-size="10.5" text-anchor="middle" fill="#999">1</text>
