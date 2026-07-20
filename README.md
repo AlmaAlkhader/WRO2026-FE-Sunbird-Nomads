@@ -150,3 +150,71 @@ The camera is one of the most important components for navigation, requiring a s
 
 The mount secures the Pi Camera using screws and includes an opening for the lens, ensuring clear vision. The camera is placed at the front of the robot to maximize visibility and improve obstacle detection during autonomous navigation. It is worth noting that the **"SN"** engraved on our mounts refers to our team name, **Sunbird Nomads**.
 
+## 🚀 Software Architecture & Obstacle Strategy
+
+To test and calibrate the robot, we built a live browser dashboard that runs alongside the control code on the Raspberry Pi — showing sensor readings, drive state, and steering in real time, with manual override controls for tuning before autonomous runs.
+
+<img src="docs/dashboard-screenshot.png" width="500">
+
+*The dashboard shown in its idle state — sensor readings populate live once connected to the robot.*
+
+**This is a testing and calibration build for the Open Challenge (Task 1), not our final code** — see [`src/testing/`](src/testing) for the full source and [`src/final/`](src/final) for where the competition version will go.
+
+### Drive state machine
+
+The robot runs as a simple state machine rather than a continuous control loop:
+
+```mermaid
+flowchart LR
+    stopped -->|Start pressed| forward
+    forward -->|turn confirmed| turn_steer
+    turn_steer -->|servo settled, 0.45s| turn_drive
+    turn_drive -->|turn_duration elapsed| turn_recenter
+    turn_recenter -->|servo settled, 0.45s| forward
+    forward -->|Stop / Emergency| stopped
+```
+
+Every phase transition explicitly stops the motor first, moves the servo, waits for it to physically settle, then resumes — this was a deliberate choice over changing steering angle while still driving, since accessories mounted this close to the servo left very little margin for the wheel to catch a mount mid-turn.
+
+### Turn decision — the math
+
+Every ~340 ms sensor cycle, both ultrasonic readings are median-filtered (window of 3, to reject single-sample noise), giving left distance $L$ and right distance $R$ in cm. We compute:
+
+$$\Delta = |L - R|, \qquad r = \frac{\max(L,R)}{\max(\min(L,R),\ 1)}$$
+
+A turn is only considered when:
+
+$$\Delta \geq 35 \text{ cm} \quad \text{OR} \quad (\Delta \geq 20 \text{ cm} \ \text{AND} \ r \geq 1.8)$$
+
+The ratio clause exists because a fixed centimeter threshold alone misses proportionally large gaps at short range — 15 cm vs. 30 cm ($\Delta=15$) is a real opening but falls under a flat 20 cm cutoff, while 20 cm vs. 40 cm ($\Delta=20,\ r=2.0$) clearly should trigger. Combining both catches that case without lowering the flat threshold enough to react to noise.
+
+Even when the threshold is crossed, the robot doesn't turn immediately — it requires **3 consecutive sensor cycles** to agree on the same direction before committing, and at least **1.5 seconds** of forward driving since the last decision. Both are debounce measures: the first against a single noisy reading, the second against immediately re-triggering right after finishing a turn.
+
+Once committed, it's a **timed maneuver, not a sensor-confirmed exit**: stop → steer → drive for a fixed duration → stop → recenter → resume. The turn doesn't end because the sensors say it's clear; it ends because the clock says so. This is simpler and more predictable to tune than closing the loop on sensor feedback, at the cost of needing the timing recalibrated if speed or the track layout changes.
+
+### Steering angle → servo duty cycle
+
+The servo is commanded by PWM duty cycle, mapped linearly from the calibrated angle range:
+
+$$\text{duty}\% = 2.5 + \frac{\theta - 30}{120}\times 10$$
+
+| Position | Angle | Duty cycle |
+|---|---|---|
+| Left | 81° | 6.75% |
+| Center | 106° | 8.83% |
+| Right | 131° | 10.92% |
+
+### Safety systems
+
+- **Heartbeat watchdog:** the browser sends a signal once per second; if it's missing for **3 seconds**, the robot force-stops and recenters automatically, whether or not anyone pressed a button.
+- **Motor always stops before steering changes** — never commanded to turn and drive in the same instant.
+- **Clean shutdown on Ctrl+C / SIGTERM:** stop motor, recenter servo, stop PWM, release GPIO.
+
+### Known constraints (by design, not oversight)
+
+- Speed and distance are **open-loop estimates** — `estimated_speed = max_speed_cm_s × pwm% / 100`, integrated over time. There's no wheel encoder, so these numbers are useful for tuning consistency but aren't ground truth.
+- The servo has no position feedback; the dashboard shows the *commanded* angle only, never a measured one.
+
+### Current scope
+
+This logic handles the Open Challenge only. Obstacle Challenge behavior (pillar color detection, avoidance, parking) will be documented here once that code exists.
