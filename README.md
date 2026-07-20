@@ -32,6 +32,10 @@ An autonomous vehicle engineered through testing, failure, redesign, and continu
 ---
 ##  Why “Sunbird Nomads”?
 
+<p align="center">
+  <img src="docs/why-sunbird-nomads.svg" alt="Visual explanation of the Sunbird Nomads team name" width="900"/>
+</p>
+
 The **Palestine sunbird** is a small, colourful bird native to our region and recognized as the national bird of Palestine. For Palestinians, it represents our land, identity, freedom, and resilience.
 
 The word **Nomads** reflects our engineering journey constantly exploring, adapting, learning, and moving toward better solutions.
