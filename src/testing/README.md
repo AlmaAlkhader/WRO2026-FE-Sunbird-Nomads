@@ -1,7 +1,7 @@
 # Source Code
 
 This code was used for testing and calibration of the Open Challenge (Task 1) — sensor readings, servo angles, turn timing, and speed settings were tuned through the live dashboard it exposes. **This is not the final code.** The final version will be added separately.
-![Dashboard](docs/dashboard-screenshot.png)
+<img src="docs/dashboard-screenshot.png" width="500">
 
 *The dashboard shown in its idle state — sensor readings populate live once connected to the robot.*
 ## Files
