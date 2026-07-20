@@ -244,7 +244,7 @@ The power switch energizes the drive system. A separate start control launches t
 
 | Source or rail | Connected loads | Confirmed information | Engineering status |
 |---|---|---|---|
-| 3S motor pack | H-bridge, drive motor, servo rail | 3 × 18500 Li-ion cells, each labelled 3.7 V and 2250 mAh | Pack label and series calculation documented; loaded voltage and runtime pending |
+| 3S motor pack | H-bridge, drive motor, servo rail | 3 × 18500 Li-ion cells, each labelled 3.7 V and 2250 mAh | Pack label and series calculation documented |
 | USB power bank | Raspberry Pi 4, camera, Pi-side sensors | Billboard 10,000 mAh; labelled output reported as 5 V / 3 A | Output rating matches the Raspberry Pi 4 supply recommendation; rail-voltage testing pending |
 | H-bridge motor output | 12 V kit motor | PWM speed and direction control | Driver marking and motor current pending |
 | H-bridge module 5 V terminal | Steering servo | Servo power and ground; signal from Raspberry Pi GPIO12 | Whether the terminal is regulated output or external input must be verified from the board jumper and marking |
