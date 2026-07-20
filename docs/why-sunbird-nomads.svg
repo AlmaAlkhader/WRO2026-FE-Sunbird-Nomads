@@ -1,0 +1,25 @@
+<svg viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+<style>
+  .drift { stroke-dasharray: 6 10; animation: drift 3s linear infinite; }
+  @keyframes drift { to { stroke-dashoffset: -32; } }
+  .bob { animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+</style>
+<rect x="0" y="0" width="1000" height="380" fill="#ffffff"/>
+<text x="500.0" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#12243c">Why &#8220;Sunbird Nomads&#8221;?</text>
+<path id="trail" d="M 90 170 Q 300 130 500 170 T 910 170" fill="none" stroke="#dfa527" stroke-width="2.5" class="drift"/>
+<circle cx="90" cy="170" r="7" fill="#12243c"/>
+<text x="90" y="200" text-anchor="middle" font-size="11.5" fill="#5b6472">rooted at home</text>
+<path d="M 900 162 L 918 170 L 900 178 Z" fill="#12243c"/>
+<text x="905" y="200" text-anchor="middle" font-size="11.5" fill="#5b6472">always moving forward</text>
+<g><g class="bob"><path d="M -14 4 Q -2 -14 14 -4 Q 22 0 24 6 Q 12 3 4 6 Q 13 11 14 18 Q 2 15 -6 6 Q -11 10 -18 8 Z" fill="#dfa527"/></g><animateMotion dur="6s" repeatCount="indefinite" rotate="auto"><mpath href="#trail"/></animateMotion></g>
+<rect x="60" y="250" width="420" height="90" rx="10" fill="#f7ecd2"/>
+<text x="80" y="280" font-size="14.5" font-weight="700" fill="#12243c">Sunbird</text>
+<text x="80" y="302" font-size="11.5" fill="#5b6472">Palestine's national bird &#8212; land, identity,</text>
+<text x="80" y="320" font-size="11.5" fill="#5b6472">freedom, and resilience.</text>
+<rect x="520" y="250" width="420" height="90" rx="10" fill="#e8edf3"/>
+<text x="540" y="280" font-size="14.5" font-weight="700" fill="#12243c">Nomads</text>
+<text x="540" y="302" font-size="11.5" fill="#5b6472">The engineering journey &#8212; exploring, adapting,</text>
+<text x="540" y="320" font-size="11.5" fill="#5b6472">learning, always moving toward a better solution.</text>
+<text x="500.0" y="366" text-anchor="middle" font-size="12" font-style="italic" fill="#12243c">Deeply rooted in home &#8212; always moving forward.</text>
+</svg>
