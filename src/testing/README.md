@@ -21,7 +21,7 @@ This code was used for testing and calibration of the Open Challenge (Task 1) �
 - 1× 3-wire hobby servo (signal BCM12, 50 Hz) — no position feedback
 - 1× H-bridge motor driver (EN/PWM on BCM13, IN1 on BCM23, IN2 on BCM24)
 
-Full pin table and the reasoning behind each connection: [`schemes/wiring-diagram.svg`](../../schemes/wiring-diagram.svg).
+The full pin table, power distribution, electrical checks, and connection reasoning are documented in the root README under [Power & Sensor Architecture](../../README.md#power--sensor-architecture).
 
 ## Dependencies
 
