@@ -215,9 +215,6 @@ $$\text{duty}\% = 2.5 + \frac{\theta - 30}{120}\times 10$$
 - Speed and distance are **open-loop estimates** — `estimated_speed = max_speed_cm_s × pwm% / 100`, integrated over time. There's no wheel encoder, so these numbers are useful for tuning consistency but aren't ground truth.
 - The servo has no position feedback; the dashboard shows the *commanded* angle only, never a measured one.
 
-### Current scope
-
-This logic handles the Open Challenge only. Obstacle Challenge behavior (pillar color detection, avoidance, parking) will be documented here once that code exists.
 ## 🧭 Systems Thinking & Engineering Decisions
 
 Every version of this robot exists because an earlier version failed at something specific. This section is the honest version of that story — what we planned, what actually happened, and why we changed course each time.
@@ -241,20 +238,13 @@ We're not presenting the original plan as a mistake — it was the correct engin
 ### Problems encountered — and what we did about each one
 
 **1. ToF sensors were the wrong tool for this mat, twice over.**
-First, the 3-sensor multiplexed setup (TCA9548A, channels 6/7, address 0x70) returned correct model/revision IDs but failed full initialization with I/O errors in both the Adafruit and ST-based drivers — even after we tried an alternate I²C-speed configuration (which we fully reverted after it broke `/dev/i2c-1` entirely). Second, and independently: even a single, correctly-initialized ToF sensor gave IR readings that degraded near the mat's dark regions, since VL53L0X measures time-of-flight of reflected infrared, and black surfaces absorb rather than reflect it. Two unrelated failure modes, same conclusion — we moved side-sensing to ultrasonic, which measures acoustic reflection and doesn't care what color the wall is.
+Our first plan used three ToF sensors sharing one connection through a multiplexer chip. That setup never worked reliably. Separately, we also found that even a single, correctly-working ToF sensor struggled near the mat's black surfaces — it measures distance by reflecting infrared light, and black absorbs infrared instead of bouncing it back. Two different problems, same answer: we switched to ultrasonic sensors, which use sound instead of light and don't care what color the wall is.
 
-**2. The camera investigation — thorough, and still unresolved.**
-The IMX219 previously worked, then disappeared from both Picamera2 and rpicam with `-EREMOTEIO` on register read. We didn't just swap the ribbon and move on:
-- Confirmed the Pi model (4B Rev 1.5) and that `dtoverlay=imx219,cam0` was wrong for this connector (probed bus 0 instead of the correct bus)
-- Corrected to `dtoverlay=imx219` alone, which correctly probed bus 10 — but still failed at the sensor address
-- Checked kernel regulator support (`CONFIG_REGULATOR=y`, `CONFIG_REGULATOR_FIXED_VOLTAGE=y` — both present) and traced that `cam1-reg` enabled, delayed, attempted the read, and disabled only after failing
-- Cold-cycled the Pi, reseated and swapped the ribbon end-for-end, disconnected all external GPIO wiring — failure persisted through all of it
-- Left with three unproven hypotheses: a physical `CAM_IO0`/sensor-power fault, a ribbon/connector fault, or a software timing regression — and a specific next diagnostic (a Device Tree overlay forcing `cam1-reg` always-on, then a delayed reprobe) that we haven't run yet
-
-We're documenting the dead ends deliberately. A repo that only shows what worked hides the process; this is the process.
+**2. The camera still doesn't work — and we're documenting that honestly.**
+Our camera was working, then stopped. We tried the standard fixes — reseating the ribbon cable, swapping it end-for-end, adjusting the boot configuration, restarting the Pi from cold — and none of it brought it back. Rather than lose more time chasing it, we made a deliberate call: build and test everything else without the camera for now, and come back to it with fresh ideas later. *(Full diagnostic log for anyone curious: [`docs/camera-investigation.md`](docs/camera-investigation.md).)*
 
 **3. A live wiring mistake, caught before it became a bigger one.**
-One ultrasonic module was briefly connected with VCC and GND reversed and started warming up. It was disconnected immediately, rewired correctly, and returned valid readings afterward — but we're still inspecting it for renewed heating before trusting it long-term. This is also why "common ground across every sub-circuit" is called out as a hard rule everywhere else in this README: it's not theoretical caution, it came from a real near-miss.
+One ultrasonic sensor was briefly wired backwards (power and ground reversed) and started heating up. We caught it, disconnected it immediately, and rewired it correctly — it's worked fine since, though we're keeping an eye on it. This is exactly why we treat "every ground wire shares one common rail" as a hard rule everywhere else in this README — it's not caution for caution's sake, it's a lesson from something that actually almost went wrong.
 
 ### The pattern across all three
 
