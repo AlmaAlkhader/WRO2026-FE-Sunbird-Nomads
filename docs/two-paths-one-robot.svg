@@ -1,0 +1,79 @@
+<svg viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">Two Specializations, One Engineering Journey</title>
+  <desc id="desc">Alma's electronics and software path and Sara's mechanical-design path combine into the Sunbird Nomads robot journey from the ESP32 prototype to national qualification.</desc>
+  <style>
+    .signal { stroke-dasharray: 8 11; animation: signal 3s linear infinite; }
+    .gear { transform-box: fill-box; transform-origin: center; animation: spin 7s linear infinite; }
+    .car { animation: bob 1.7s ease-in-out infinite; transform-origin: center; }
+    .spark { animation: glow 1.8s ease-in-out infinite; }
+    @keyframes signal { to { stroke-dashoffset: -38; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    @keyframes glow { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+
+  <rect width="1200" height="500" rx="20" fill="#ffffff"/>
+  <text x="600" y="46" text-anchor="middle" font-size="25" font-weight="700" fill="#12243c">Two Specializations. One Engineering Journey.</text>
+  <text x="600" y="72" text-anchor="middle" font-size="13" fill="#667085">Electronics and mechanical design developed together at every milestone</text>
+
+  <rect x="55" y="105" width="250" height="115" rx="16" fill="#eaf3fb"/>
+  <circle cx="92" cy="139" r="20" fill="#2d70a5"/>
+  <path d="M84 139h16M92 131v16M80 127l7 7M104 127l-7 7M80 151l7-7M104 151l-7-7" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="122" y="137" font-size="17" font-weight="700" fill="#12243c">Alma</text>
+  <text x="122" y="158" font-size="12" fill="#446078">Electronics &amp; Software</text>
+  <text x="78" y="190" font-size="12" fill="#5b6472">power • sensors • code • Raspberry Pi</text>
+
+  <rect x="55" y="280" width="250" height="115" rx="16" fill="#f7ecd2"/>
+  <g class="gear">
+    <circle cx="92" cy="314" r="21" fill="#dfa527"/>
+    <circle cx="92" cy="314" r="9" fill="#fff"/>
+    <path d="M92 287v8M92 333v8M65 314h8M111 314h8M73 295l6 6M105 327l6 6M73 333l6-6M105 301l6-6" stroke="#dfa527" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <text x="122" y="312" font-size="17" font-weight="700" fill="#12243c">Sara</text>
+  <text x="122" y="333" font-size="12" fill="#725b24">Mechanical Design</text>
+  <text x="78" y="365" font-size="12" fill="#5b6472">steering • axle • chassis • 3D printing</text>
+
+  <path d="M305 163 C405 163 410 235 510 250" fill="none" stroke="#2d70a5" stroke-width="5" class="signal"/>
+  <path d="M305 338 C405 338 410 265 510 250" fill="none" stroke="#dfa527" stroke-width="5" class="signal"/>
+  <circle cx="510" cy="250" r="11" fill="#12243c"/>
+  <circle cx="510" cy="250" r="20" fill="none" stroke="#dfa527" stroke-width="2" class="spark"/>
+
+  <path id="journey" d="M510 250 C610 250 670 250 760 250 S960 250 1110 250" fill="none" stroke="#12243c" stroke-width="5" stroke-linecap="round"/>
+  <path d="M1097 239l20 11-20 11z" fill="#12243c"/>
+
+  <g transform="translate(600 250)">
+    <circle cy="0" r="25" fill="#ffffff" stroke="#12243c" stroke-width="3"/>
+    <rect x="-11" y="-9" width="22" height="18" rx="3" fill="#2d70a5"/>
+    <path d="M-7-14v5M0-14v5M7-14v5M-7 9v5M0 9v5M7 9v5M-16-5h5M-16 3h5M11-5h5M11 3h5" stroke="#2d70a5" stroke-width="2"/>
+  </g>
+  <text x="600" y="210" text-anchor="middle" font-size="13" font-weight="700" fill="#12243c">19 May</text>
+  <text x="600" y="296" text-anchor="middle" font-size="12" fill="#5b6472">ESP32 prototype</text>
+
+  <g transform="translate(760 250)">
+    <circle cy="0" r="25" fill="#ffffff" stroke="#12243c" stroke-width="3"/>
+    <path d="M-13 10L-5-12H5l13 22M-9 2H10M-2-12v-6M5-12l6-7" fill="none" stroke="#dfa527" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="760" y="210" text-anchor="middle" font-size="13" font-weight="700" fill="#12243c">Redesign</text>
+  <text x="760" y="296" text-anchor="middle" font-size="12" fill="#5b6472">steering • power • axle</text>
+
+  <g transform="translate(920 250)">
+    <circle cy="0" r="25" fill="#ffffff" stroke="#12243c" stroke-width="3"/>
+    <rect x="-13" y="-13" width="26" height="26" rx="3" fill="#65a56d"/>
+    <circle cx="-6" cy="-5" r="3" fill="#fff"/><circle cx="5" cy="4" r="3" fill="#fff"/>
+    <path d="M-17-7h4M-17 1h4M-17 9h4M13-7h4M13 1h4M13 9h4" stroke="#65a56d" stroke-width="3"/>
+  </g>
+  <text x="920" y="210" text-anchor="middle" font-size="13" font-weight="700" fill="#12243c">13 July</text>
+  <text x="920" y="296" text-anchor="middle" font-size="12" fill="#5b6472">Raspberry Pi • maximum score</text>
+
+  <g class="car" transform="translate(1080 205)">
+    <path d="M-38 18h76l-8-23h-43L-24 5h-14z" fill="#dfa527" stroke="#12243c" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="-9" y="-17" width="34" height="15" rx="3" fill="#2d70a5" stroke="#12243c" stroke-width="3"/>
+    <circle cx="-23" cy="20" r="9" fill="#12243c"/><circle cx="25" cy="20" r="9" fill="#12243c"/>
+    <circle cx="-23" cy="20" r="3" fill="#fff"/><circle cx="25" cy="20" r="3" fill="#fff"/>
+  </g>
+  <text x="1080" y="296" text-anchor="middle" font-size="13" font-weight="700" fill="#12243c">National qualifier</text>
+
+  <rect x="365" y="420" width="770" height="45" rx="12" fill="#f5f7fa"/>
+  <text x="750" y="448" text-anchor="middle" font-size="13" font-style="italic" fill="#12243c">Every test, mistake, and redesign moved both paths—and one robot—forward.</text>
+</svg>
