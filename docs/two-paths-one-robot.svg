@@ -72,7 +72,6 @@
     <circle cx="-23" cy="20" r="9" fill="#12243c"/><circle cx="25" cy="20" r="9" fill="#12243c"/>
     <circle cx="-23" cy="20" r="3" fill="#fff"/><circle cx="25" cy="20" r="3" fill="#fff"/>
   </g>
-  <text x="1080" y="296" text-anchor="middle" font-size="13" font-weight="700" fill="#12243c">National qualifier</text>
 
   <rect x="365" y="420" width="770" height="45" rx="12" fill="#f5f7fa"/>
   <text x="750" y="448" text-anchor="middle" font-size="13" font-style="italic" fill="#12243c">Every test, mistake, and redesign moved both paths—and one robot—forward.</text>
