@@ -49,7 +49,7 @@ We are **Alma Alkhader** and **Sara Afifi**, two second-year engineering student
            width="280">
     </td>
     <td align="center">
-      <img src="t-photos/sara-afifi.jpg"
+      <img src="docs/sara-afifi.jpg"
            alt="Sara Afifi"
            width="280">
     </td>
