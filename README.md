@@ -31,15 +31,25 @@ An autonomous vehicle engineered through testing, failure, redesign, and continu
 
 ---
 
-# Our Journey
+## 🌍 Our Journey
 
-We are two ambitious engineering students competing in the WRO Future Engineers category for the second year in a row. After our first season, we spent the past year improving our skills in mechanical design, 3D printing, embedded systems, and robotics, aiming to apply everything we had learned.
+We are **Alma Alkhader** and **Sara Afifi**, two second-year engineering students at Birzeit University brought together by a shared interest in robotics. This is our second year competing in the WRO Future Engineers category. Our experience began with our [WRO 2025 BiruniVerse project](https://github.com/AlmaAlkhader/WRO2025-BiruniVerse), where we gained our first practical experience designing, building, and programming an autonomous vehicle.
 
-Our first robot came to life on **May 19, 2026**, powered by an ESP32. Although it could complete the Open Challenge, it still had major issues with steering, power delivery, and the rear axle. Over the following weeks, we redesigned and improved these systems while balancing university exams and projects.
+### 👩‍💻 Alma Alkhader — Computer Engineering
 
-By the local competition on **July 13, 2026**, our robot had evolved significantly. Powered by a Raspberry Pi, it achieved the maximum score in the Open Challenge and earned **second place**, qualifying us for the national competition.
+Alma is a second-year Computer Engineering student and a member of the **IEEE Robotics and Automation Society (RAS)** at the Birzeit University Student Branch. Her strong interest in robotics led her to focus on the robot’s electronics, power system, wiring, Raspberry Pi setup, sensor integration, and control software.
 
-We are proud of our progress, but we know there is still plenty of room for improvement. We look forward to continuing our journey and pushing our robot even further.
+### ⚙️ Sara Afifi — Mechanical Engineering
+
+Sara is a second-year Mechanical Engineering student and a technical member of **IMechE at Birzeit University**. She led the robot’s mechanical development, including the chassis modifications, steering mechanism, component placement, measurements, and custom-designed mounts.
+
+Our different specializations allowed us to approach the robot from two connected perspectives. Alma concentrated on making the electronics and software work reliably, while Sara focused on ensuring that the mechanical design could support those systems and move effectively. Nearly every improvement required both sides to work together.
+
+Our first robot of the 2026 season came to life on **May 19, 2026**, powered by an ESP32. Although it completed the Open Challenge, it still faced major issues with steering, power delivery, and the rear axle. Over the following weeks, we redesigned and improved these systems while balancing the project with our university exams and coursework.
+
+By the local competition on **July 13, 2026**, the robot had evolved significantly. After moving from the ESP32 to a Raspberry Pi and making several mechanical and electrical improvements, it achieved the maximum score in the Open Challenge. We earned **second place** and qualified for the national competition.
+
+We are proud of how far the robot has come, but our journey is not finished. Every test, mistake, and redesign has taught us something new, and we are continuing to improve the robot as we prepare for the next stage of the competition.
 
 ## Design Strategy
 
