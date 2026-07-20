@@ -34,7 +34,7 @@ An autonomous vehicle engineered through testing, failure, redesign, and continu
 
 The **Palestine sunbird** is a small, colourful bird native to our region and recognized as the national bird of Palestine. For Palestinians, it represents our land, identity, freedom, and resilience.
 
-The word **Nomads** reflects our engineering journey—constantly exploring, adapting, learning, and moving toward better solutions.
+The word **Nomads** reflects our engineering journey constantly exploring, adapting, learning, and moving toward better solutions.
 
 Together, **Sunbird Nomads** represents a Palestinian team deeply rooted in its homeland while continuing to move forward and discover new possibilities.
 
