@@ -1,6 +1,6 @@
 # Source Code
 
-This code was used for testing and calibration of the Open Challenge (Task 1) — sensor readings, servo angles, turn timing, and speed settings were tuned through the live dashboard it exposes. **This is not the final code.** The final version will be added separately.
+This code was used for testing and calibration of the Open Challenge (Task 1) — sensor readings, servo angles, turn timing, and speed settings were tuned through the live dashboard it exposes. **This is the testing build, not competition code.**
 
 
 <img src="../../docs/dashboard-screenshot.png" width="500">
