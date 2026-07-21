@@ -1,0 +1,96 @@
+<svg viewBox="0 0 1000 650" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#12243c"/>
+    </marker>
+    <marker id="goldArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#dfa527"/>
+    </marker>
+    <style>
+      .title{font-size:23px;font-weight:700;fill:#12243c}
+      .subtitle{font-size:12.5px;fill:#5b6472}
+      .boxTitle{font-size:14px;font-weight:700;fill:#12243c}
+      .body{font-size:11.5px;fill:#46505e}
+      .small{font-size:10.5px;fill:#5b6472}
+      .flow{fill:none;stroke:#12243c;stroke-width:2;marker-end:url(#arrow)}
+      .telemetry{fill:none;stroke:#dfa527;stroke-width:2;stroke-dasharray:6 5;marker-end:url(#goldArrow)}
+    </style>
+  </defs>
+
+  <rect width="1000" height="650" fill="#ffffff"/>
+  <text x="500" y="38" text-anchor="middle" class="title">Testing Controller: Sensor-to-Actuator Architecture</text>
+  <text x="500" y="61" text-anchor="middle" class="subtitle">The uploaded Raspberry Pi code follows a visible, reproducible path from wall measurements to motor and steering commands.</text>
+
+  <rect x="40" y="105" width="170" height="195" rx="14" fill="#e8edf3"/>
+  <text x="125" y="133" text-anchor="middle" class="boxTitle">1 · Inputs</text>
+  <rect x="58" y="151" width="134" height="38" rx="8" fill="#ffffff"/>
+  <text x="125" y="169" text-anchor="middle" class="body">Left ultrasonic</text>
+  <text x="125" y="182" text-anchor="middle" class="small">GPIO5 / GPIO6</text>
+  <rect x="58" y="201" width="134" height="38" rx="8" fill="#ffffff"/>
+  <text x="125" y="219" text-anchor="middle" class="body">Right ultrasonic</text>
+  <text x="125" y="232" text-anchor="middle" class="small">GPIO20 / GPIO21</text>
+  <rect x="58" y="251" width="134" height="32" rx="8" fill="#f7ecd2"/>
+  <text x="125" y="271" text-anchor="middle" class="body">Rear ToF · telemetry</text>
+
+  <rect x="250" y="105" width="180" height="195" rx="14" fill="#f7ecd2"/>
+  <text x="340" y="133" text-anchor="middle" class="boxTitle">2 · Acquisition</text>
+  <text x="340" y="165" text-anchor="middle" class="body">10 µs trigger pulse</text>
+  <text x="340" y="187" text-anchor="middle" class="body">30 ms Echo timeouts</text>
+  <text x="340" y="209" text-anchor="middle" class="body">2–400 cm validity check</text>
+  <line x1="275" y1="228" x2="405" y2="228" stroke="#d3b56b"/>
+  <text x="340" y="251" text-anchor="middle" class="body">Read left → wait 60 ms</text>
+  <text x="340" y="273" text-anchor="middle" class="body">Read right → wait 60 ms</text>
+
+  <rect x="470" y="105" width="180" height="195" rx="14" fill="#e8edf3"/>
+  <text x="560" y="133" text-anchor="middle" class="boxTitle">3 · Filtering</text>
+  <text x="560" y="170" text-anchor="middle" class="body">Rolling median</text>
+  <text x="560" y="193" text-anchor="middle" class="body">of up to 3 valid samples</text>
+  <rect x="500" y="218" width="120" height="46" rx="8" fill="#ffffff"/>
+  <text x="560" y="238" text-anchor="middle" class="small">[48, 182, 49]</text>
+  <text x="560" y="255" text-anchor="middle" class="body">median = 49 cm</text>
+
+  <rect x="690" y="105" width="270" height="195" rx="14" fill="#f7ecd2"/>
+  <text x="825" y="133" text-anchor="middle" class="boxTitle">4 · Turn Decision</text>
+  <text x="825" y="163" text-anchor="middle" class="body">Δ = |L − R|</text>
+  <text x="825" y="186" text-anchor="middle" class="body">r = max(L,R) / max(min(L,R),1)</text>
+  <rect x="716" y="207" width="218" height="54" rx="8" fill="#ffffff"/>
+  <text x="825" y="228" text-anchor="middle" class="small">Δ ≥ 35 cm, or</text>
+  <text x="825" y="247" text-anchor="middle" class="small">Δ ≥ 20 cm and r ≥ 1.8</text>
+  <text x="825" y="284" text-anchor="middle" class="body">3 confirmations · 1.5 s lockout</text>
+
+  <path d="M210 202 H240" class="flow"/>
+  <path d="M430 202 H460" class="flow"/>
+  <path d="M650 202 H680" class="flow"/>
+
+  <rect x="210" y="362" width="580" height="112" rx="16" fill="#12243c"/>
+  <text x="500" y="390" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">5 · Drive State Machine</text>
+  <rect x="232" y="411" width="88" height="38" rx="8" fill="#ffffff"/>
+  <text x="276" y="435" text-anchor="middle" class="body">forward</text>
+  <rect x="342" y="411" width="98" height="38" rx="8" fill="#ffffff"/>
+  <text x="391" y="435" text-anchor="middle" class="body">turn_steer</text>
+  <rect x="462" y="411" width="98" height="38" rx="8" fill="#ffffff"/>
+  <text x="511" y="435" text-anchor="middle" class="body">turn_drive</text>
+  <rect x="582" y="411" width="112" height="38" rx="8" fill="#ffffff"/>
+  <text x="638" y="435" text-anchor="middle" class="body">turn_recenter</text>
+  <rect x="716" y="411" width="52" height="38" rx="8" fill="#dfa527"/>
+  <text x="742" y="435" text-anchor="middle" font-size="11" font-weight="700" fill="#12243c">loop</text>
+  <path d="M320 430 H332" stroke="#dfa527" stroke-width="2" marker-end="url(#goldArrow)"/>
+  <path d="M440 430 H452" stroke="#dfa527" stroke-width="2" marker-end="url(#goldArrow)"/>
+  <path d="M560 430 H572" stroke="#dfa527" stroke-width="2" marker-end="url(#goldArrow)"/>
+  <path d="M694 430 H706" stroke="#dfa527" stroke-width="2" marker-end="url(#goldArrow)"/>
+  <path d="M825 300 V328 H500 V352" class="flow"/>
+
+  <rect x="80" y="530" width="365" height="84" rx="14" fill="#e8edf3"/>
+  <text x="262" y="557" text-anchor="middle" class="boxTitle">6 · Actuators</text>
+  <text x="262" y="580" text-anchor="middle" class="body">S3003 steering servo · GPIO12 · 50 Hz PWM</text>
+  <text x="262" y="600" text-anchor="middle" class="body">L298N motor control · GPIO13 / 23 / 24 · 1 kHz PWM</text>
+  <path d="M390 474 V520" class="flow"/>
+
+  <rect x="555" y="530" width="365" height="84" rx="14" fill="#f7ecd2"/>
+  <text x="737" y="557" text-anchor="middle" class="boxTitle">Dashboard and Safety Layer</text>
+  <text x="737" y="580" text-anchor="middle" class="body">Live telemetry · parameter tuning · manual stop</text>
+  <text x="737" y="600" text-anchor="middle" class="body">1 s heartbeat · automatic stop after 3 s without heartbeat</text>
+  <path d="M737 520 V484" class="telemetry"/>
+
+  <text x="500" y="638" text-anchor="middle" class="small">Solid arrows show autonomous control flow. Gold dashed arrows show supervision and telemetry.</text>
+</svg>
