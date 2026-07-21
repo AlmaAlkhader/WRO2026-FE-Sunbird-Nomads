@@ -1,0 +1,17 @@
+<svg viewBox="0 0 1000 570" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',Helvetica,Arial,sans-serif">
+<defs><marker id="g" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#dfa527"/></marker>
+<style>.t{font-size:22px;font-weight:700;fill:#12243c}.s{font-size:11px;fill:#5b6472}.h{font-size:13px;font-weight:700;fill:#12243c}.b{font-size:11px;fill:#46505e}.p{fill:none;stroke:#dfa527;stroke-width:5;marker-end:url(#g)}</style></defs>
+<rect width="1000" height="570" fill="#fff"/><text x="500" y="35" text-anchor="middle" class="t">Pillar Avoidance Geometry</text>
+<text x="500" y="57" text-anchor="middle" class="s">Top-down conceptual paths; the calibrated controller uses gradual steering rather than an instantaneous lane change.</text>
+<rect x="60" y="95" width="400" height="395" rx="16" fill="#eef0f3"/><rect x="540" y="95" width="400" height="395" rx="16" fill="#eef0f3"/>
+<text x="260" y="125" text-anchor="middle" class="h">RED pillar → pass on its right</text><text x="740" y="125" text-anchor="middle" class="h">GREEN pillar → pass on its left</text>
+<line x1="105" y1="145" x2="105" y2="465" stroke="#12243c" stroke-width="6"/><line x1="415" y1="145" x2="415" y2="465" stroke="#12243c" stroke-width="6"/>
+<line x1="585" y1="145" x2="585" y2="465" stroke="#12243c" stroke-width="6"/><line x1="895" y1="145" x2="895" y2="465" stroke="#12243c" stroke-width="6"/>
+<line x1="260" y1="150" x2="260" y2="465" stroke="#c4cbd3" stroke-width="2" stroke-dasharray="7 7"/><line x1="740" y1="150" x2="740" y2="465" stroke="#c4cbd3" stroke-width="2" stroke-dasharray="7 7"/>
+<rect x="225" y="245" width="70" height="70" rx="7" fill="#d73333"/><text x="260" y="286" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">RED</text>
+<rect x="705" y="245" width="70" height="70" rx="7" fill="#2f9e61"/><text x="740" y="286" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">GREEN</text>
+<path d="M260 445C260 390 350 380 350 300S300 190 260 165" class="p"/><path d="M740 445C740 390 650 380 650 300S700 190 740 165" class="p"/>
+<g transform="translate(229 410)"><rect width="62" height="88" rx="12" fill="#12243c"/><circle cx="12" cy="18" r="7" fill="#dfa527"/><circle cx="50" cy="18" r="7" fill="#dfa527"/></g>
+<g transform="translate(709 410)"><rect width="62" height="88" rx="12" fill="#12243c"/><circle cx="12" cy="18" r="7" fill="#dfa527"/><circle cx="50" cy="18" r="7" fill="#dfa527"/></g>
+<text x="260" y="530" text-anchor="middle" class="b">Steering moves down from 106° toward 81°</text><text x="740" y="530" text-anchor="middle" class="b">Steering moves up from 106° toward 131°</text>
+<text x="500" y="557" text-anchor="middle" class="s">Avoidance remains active until the selected pillar is absent from the ROI for three consecutive frames.</text></svg>
