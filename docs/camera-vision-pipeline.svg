@@ -1,0 +1,23 @@
+<svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',Helvetica,Arial,sans-serif">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#12243c"/></marker>
+<style>.t{font-size:22px;font-weight:700;fill:#12243c}.s{font-size:11px;fill:#5b6472}.h{font-size:13px;font-weight:700;fill:#12243c}.b{font-size:10.5px;fill:#46505e}.f{fill:none;stroke:#12243c;stroke-width:2;marker-end:url(#a)}</style></defs>
+<rect width="1000" height="500" fill="#fff"/><text x="500" y="35" text-anchor="middle" class="t">Camera Processing Pipeline</text>
+<text x="500" y="56" text-anchor="middle" class="s">Competition control specification using the tested Picamera2 and OpenCV colour pipeline</text>
+<g transform="translate(35 105)"><rect width="135" height="105" rx="12" fill="#e8edf3"/><text x="67" y="28" text-anchor="middle" class="h">1 · Capture</text>
+<rect x="22" y="43" width="91" height="45" rx="7" fill="#12243c"/><circle cx="67" cy="65" r="15" fill="#dfa527"/><circle cx="67" cy="65" r="7" fill="#12243c"/><text x="67" y="101" text-anchor="middle" class="s">Picamera2 frame</text></g>
+<g transform="translate(200 105)"><rect width="135" height="105" rx="12" fill="#f7ecd2"/><text x="67" y="28" text-anchor="middle" class="h">2 · Crop ROI</text>
+<rect x="24" y="42" width="87" height="48" fill="#dfe5ec"/><rect x="35" y="53" width="65" height="30" fill="none" stroke="#dfa527" stroke-width="3"/><text x="67" y="101" text-anchor="middle" class="s">Relevant track area</text></g>
+<g transform="translate(365 105)"><rect width="135" height="105" rx="12" fill="#e8edf3"/><text x="67" y="28" text-anchor="middle" class="h">3 · HSV</text>
+<circle cx="48" cy="65" r="20" fill="#d73333" opacity=".85"/><circle cx="86" cy="65" r="20" fill="#2f9e61" opacity=".85"/><text x="67" y="101" text-anchor="middle" class="s">BGR → HSV</text></g>
+<g transform="translate(530 105)"><rect width="135" height="105" rx="12" fill="#f7ecd2"/><text x="67" y="28" text-anchor="middle" class="h">4 · Masks</text>
+<rect x="22" y="44" width="40" height="40" rx="5" fill="#d73333"/><rect x="73" y="44" width="40" height="40" rx="5" fill="#2f9e61"/><text x="67" y="101" text-anchor="middle" class="s">Red and green</text></g>
+<g transform="translate(695 105)"><rect width="135" height="105" rx="12" fill="#e8edf3"/><text x="67" y="28" text-anchor="middle" class="h">5 · Contours</text>
+<path d="M28 80Q36 42 62 50T105 76Z" fill="none" stroke="#12243c" stroke-width="3"/><text x="67" y="101" text-anchor="middle" class="s">Area &gt; 800 px²</text></g>
+<g transform="translate(860 105)"><rect width="105" height="105" rx="12" fill="#12243c"/><text x="52" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">6 · Select</text>
+<text x="52" y="56" text-anchor="middle" font-size="10.5" fill="#fff">largest valid</text><text x="52" y="73" text-anchor="middle" font-size="10.5" fill="#fff">red or green</text><text x="52" y="94" text-anchor="middle" font-size="10" fill="#dfa527">closest first</text></g>
+<path d="M170 158H190" class="f"/><path d="M335 158H355" class="f"/><path d="M500 158H520" class="f"/><path d="M665 158H685" class="f"/><path d="M830 158H850" class="f"/>
+<rect x="100" y="285" width="350" height="120" rx="14" fill="#fae6e6"/><circle cx="150" cy="335" r="25" fill="#d73333"/><text x="200" y="320" class="h">RED selected</text><text x="200" y="343" class="b">Pass on the right</text><text x="200" y="363" class="b">106° → 81° in 2° steps</text><text x="200" y="383" class="b">Pillar has steering priority</text>
+<rect x="550" y="285" width="350" height="120" rx="14" fill="#e3f3e9"/><circle cx="600" cy="335" r="25" fill="#2f9e61"/><text x="650" y="320" class="h">GREEN selected</text><text x="650" y="343" class="b">Pass on the left</text><text x="650" y="363" class="b">106° → 131° in 2° steps</text><text x="650" y="383" class="b">Pillar has steering priority</text>
+<path d="M912 210V245H275V275" class="f"/><path d="M912 210V245H725V275" class="f"/>
+<text x="500" y="455" text-anchor="middle" class="h">Exit rule: selected contour absent from the ROI for 3 consecutive frames</text>
+<text x="500" y="476" text-anchor="middle" class="s">Then return toward the calibrated 106° center in 1° steps and restore ultrasonic navigation.</text></svg>
