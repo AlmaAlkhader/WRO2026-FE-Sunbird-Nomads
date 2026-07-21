@@ -588,6 +588,55 @@ The uploaded Raspberry Pi program is a **testing and calibration controller for 
 
 The repository does **not** currently contain a `src/final/` competition controller or the camera-based red/green pillar-avoidance program. The obstacle hardware is documented above, but this section does not claim obstacle behavior that cannot be reproduced from the uploaded source.
 
+### Dashboard and Competition-Control Visuals
+
+The dashboard image is evidence from the uploaded calibration interface. The remaining diagrams document the **agreed competition control specification**: rear-ToF task selection at 150 mm, camera priority during Task 2, red/green avoidance, and stopping after twelve completed corners. They do not claim an autonomous final-parking routine.
+
+<table align="center">
+  <tr>
+    <td align="center" width="45%">
+      <img src="docs/dashboard-screenshot.png" alt="Sunbird live calibration dashboard" width="410"><br>
+      <strong>Calibration dashboard</strong><br>
+      <sub>Live telemetry, steering, speed, timing, and safety controls</sub>
+    </td>
+    <td align="center" width="55%">
+      <img src="docs/competition-control-strategy.svg" alt="Competition challenge selection and control strategy" width="500"><br>
+      <strong>Competition control specification</strong><br>
+      <sub>Task selection, behavior priority, corner counting, and stop condition</sub>
+    </td>
+  </tr>
+</table>
+
+#### Camera Processing and ROI
+
+<p align="center">
+  <img src="docs/camera-vision-pipeline.svg" alt="Picamera2 and OpenCV obstacle detection pipeline" width="930"/>
+  <br>
+  <em>Frame processing from ROI crop through HSV masks, contour filtering, colour selection, and steering.</em>
+</p>
+
+<p align="center">
+  <img src="docs/camera-roi-selection.svg" alt="Conceptual camera ROI and closest-pillar selection" width="900"/>
+  <br>
+  <em>The ROI removes irrelevant image regions. If both colours appear, the largest accepted contour is treated as the closest obstacle.</em>
+</p>
+
+#### Red and Green Avoidance Geometry
+
+<p align="center">
+  <img src="docs/pillar-avoidance-geometry.svg" alt="Top-down red and green pillar avoidance paths" width="900"/>
+  <br>
+  <em>Red is passed on the right; green is passed on the left. Avoidance ends after the selected pillar is absent from the ROI for three consecutive frames.</em>
+</p>
+
+#### Corner and Lap Counting
+
+<p align="center">
+  <img src="docs/lap-counter.svg" alt="Twelve-corner counter representing three completed laps" width="900"/>
+  <br>
+  <em>One completed corner maneuver increments the counter. Four corners form one lap, and the robot stops after corner twelve.</em>
+</p>
+
 ### Control Flow
 
 The robot uses explicit states instead of mixing sensing, steering, and motor commands in one loop:
