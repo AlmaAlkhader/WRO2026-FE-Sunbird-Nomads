@@ -254,6 +254,12 @@ Printer reference: [ELEGOO Centauri Carbon specifications](https://eu.elegoo.com
 The chassis allows the steering-rod lengths to be adjusted. We used this to approximate **Ackermann steering**, where the inner front wheel turns more sharply than the outer front wheel because the two wheels follow different radii around the same instantaneous center of rotation.
 
 <p align="center">
+  <img src="docs/ackermann-steering-motion.svg" alt="Animated Ackermann steering geometry showing inner and outer wheel angles and the instantaneous center of rotation" width="900"/>
+  <br>
+  <em>Animated steering geometry for an illustrative 200 mm turn radius. The 44° inner and 28° outer angles are calculated from our measured wheelbase and front track.</em>
+</p>
+
+<p align="center">
   <img src="image-6.png" alt="Ackermann steering mechanism" width="500"/>
 </p>
 
