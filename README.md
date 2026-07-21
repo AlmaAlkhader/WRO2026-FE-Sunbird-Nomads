@@ -110,100 +110,197 @@ While the kit provided a solid foundation, it also presented several challenges:
 As the project evolved, we continuously modified the original design to better meet the competition's requirements, improving the mechanical structure, electronics integration, and overall reliability.
 
 # Hardware Design
-## Chassis
+## Mobility and Mechanical Design
 
-Our robot is based on the [**RoboticX 4WD RC Smart Car Chassis with S3003 Servo and Bearing Kit**](https://roboticx.ps/product/4wd-rc-smart-car-chassis-with-s3003-metal-servo-bearing-kit-for-arduino/). The seller lists the assembled chassis as **248 × 146 × 70 mm** and **680 g**, with rear-wheel drive, one **S3003 steering servo**, and one **25 mm all-metal gearmotor**. The chassis provided a solid mechanical foundation, but its original layout offered very little space for the electronics required for the competition.
+The mechanical system uses a conventional car layout: a **single rear drive axle** provides forward and reverse motion, while an **S3003 servo** steers the two front wheels through linkages. This layout satisfies the WRO requirement for a four-wheeled vehicle with one driving axle and one steering actuator, and it behaves more like a road car than a differential-drive robot.
 
-The [**L298N dual motor-controller module**](https://roboticx.ps/product/dual-motor-controller-module-l298n/) was purchased separately and is not included in the chassis package.
+### Chassis and Drive Layout
 
-To overcome this limitation, we designed a completely new **top mounting plate** and added an **additional layer** to accommodate all of the robot's electronic components while maintaining a compact and organized layout.
+Our robot is based on the [**RoboticX 4WD RC Smart Car Chassis with S3003 Servo and Bearing Kit**](https://roboticx.ps/product/4wd-rc-smart-car-chassis-with-s3003-metal-servo-bearing-kit-for-arduino/). Despite the product name, the seller describes this chassis as **rear-wheel drive with front-wheel steering**. The kit includes one S3003 steering servo, a 25 mm all-metal gearmotor, a mechanically connected rear axle, bearings, steering rods, and four wheels. The [**L298N dual motor controller**](https://roboticx.ps/product/dual-motor-controller-module-l298n/) was purchased separately.
+
+We selected the kit as a reliable mechanical starting point, but we did not keep its original component layout. Its acrylic plate had limited usable space and mounting holes intended mainly for an Arduino. Our Raspberry Pi, power system, camera, motor controller, and sensors required a new structure, so we designed a custom middle plate and an upper electronics layer.
 
 <p align="center">
-  <img src="image.png" alt="Original 4WD Arduino RC Car Chassis" width="500"/>
+  <img src="image.png" alt="Original RoboticX rear-wheel-drive chassis" width="500"/>
   <br>
-  <em>Original 4WD Arduino RC Car Chassis used as the base of our robot.</em>
+  <em>Original chassis before adding the custom two-level electronics structure.</em>
 </p>
 
-After identifying all the required electronic components and taking precise measurements, we designed a custom mounting plate tailored to our needs. The design went through **four iterations**, with each version improving the placement of components, cable management, and accessibility until we reached the final design.
+### Final Vehicle Dimensions
+
+| Dimension | Final value | How it was obtained | Why it matters |
+|---|---:|---|---|
+| Overall length | 248 mm | Measured vehicle length; also matches the chassis listing | Determines WRO envelope margin and parking-space length |
+| Chassis width | 146 mm | Published chassis width | Determines lateral clearance and field-centering geometry |
+| Assembled height | 126 mm | Measured with the upper electronics layer installed | Confirms that the two-level design remains inside the height limit |
+| Wheelbase | 137 mm | Measured axle-to-axle distance | Used in steering-angle calculations |
+| Front track width | 117 mm | Measured between the front wheel centerlines | Used to calculate different inner and outer steering angles |
+| Wheel diameter | 64 mm | Measured wheel diameter | Determines distance travelled per wheel revolution |
+| Ground clearance | 19 mm | Measured from the ground to the lowest chassis surface | Reduces the chance of the plate catching on small field irregularities |
+
+<p align="center">
+  <img src="docs/mechanical-overview.svg" alt="Top and side views with the robot's mechanical dimensions and field-fit calculations" width="1000"/>
+  <br>
+  <em>Final dimensions, WRO size margins, wheel travel, and parking-space calculations.</em>
+</p>
+
+The [WRO 2026 rules](https://wro-association.org/wp-content/uploads/WRO-2026-Future-Engineers-Self-Driving-Cars-General-Rules.pdf) limit the vehicle to **300 × 200 mm** and **300 mm in height**. Comparing the final robot with that envelope gives:
+
+```text
+Length margin = 300 − 248 = 52 mm
+Width margin  = 200 − 146 = 54 mm
+Height margin = 300 − 126 = 174 mm
+```
+
+These are total envelope margins. They show that the second electronics layer and sensor mounts remain within the dimensional limit without requiring parts to be removed before inspection.
+
+### Wheel Geometry and Linear Travel
+
+With a measured wheel diameter of **64 mm**, the theoretical distance travelled by one complete wheel revolution is:
+
+$$C=\pi D=\pi(64)=201.1\text{ mm}$$
+
+Therefore, one wheel revolution corresponds to approximately **201 mm of linear travel** if tire slip is neglected. Once wheel speed $n$ is measured in revolutions per minute, the theoretical vehicle speed can be calculated using:
+
+$$v=\frac{\pi Dn}{60}$$
+
+where $D$ is expressed in metres and $v$ is obtained in metres per second. This relationship separates the known wheel geometry from motor speed, which must be measured under the robot's actual load rather than assumed from an unidentified motor rating.
+
+### Field-Centering and Parking Geometry
+
+During setup, we established the robot's centerline by measuring from the track walls to the midpoint of the vehicle. For a corridor width $W_t$, a centered robot midpoint is:
+
+$$d_{mid}=\frac{W_t}{2}$$
+
+The open challenge may use a **1000 mm** or **600 mm** corridor, while the obstacle challenge uses a **1000 mm** corridor. The nominal midpoint references are therefore:
+
+| Nominal corridor width | Wall-to-midpoint reference | Side clearance with a 146 mm robot |
+|---:|---:|---:|
+| 1000 mm | 500 mm | $(1000-146)/2=427$ mm per side |
+| 600 mm | 300 mm | $(600-146)/2=227$ mm per side |
+
+The WRO rules allow dimensional tolerance in the field, so these values define the geometry rather than a single inflexible sensor threshold.
+
+For the obstacle challenge, the parking space is **200 mm wide**, and its length is $1.5$ times the vehicle length:
+
+```text
+Parking length = 1.5 × 248 = 372 mm
+Longitudinal allowance = 372 − 248 = 124 mm
+Lateral allowance = 200 − 146 = 54 mm
+Centered lateral allowance = 54 / 2 = 27 mm per side
+```
+
+The remaining **VL53L0X ToF sensor is mounted at the rear** and is used to monitor the final rear clearance during parking. Its job is separate from the left and right ultrasonic sensors used for wall sensing.
+
+### Custom Plate Development
+
+After identifying the required components, we designed custom middle and top plates to increase usable mounting area while preserving access to wiring and controls. The plate design went through **four physical iterations**. Our initial measurements were not accurate enough to produce a correct fit on the first attempt, so every printed version was installed on the real chassis, checked, remeasured, and revised.
 
 <table align="center">
   <tr>
     <td align="center">
-      <img src="image-4.png" alt="Middle PLate" width="300" height="300"><br>
+      <img src="image-4.png" alt="Early custom middle plate prototype" width="300" height="300"><br>
       <em>Early prototype</em>
     </td>
     <td align="center">
-      <img src="image-3.png" alt="Top plate" width="300" height="300"><br>
+      <img src="image-3.png" alt="Final custom top plate" width="300" height="300"><br>
       <em>Final design</em>
     </td>
   </tr>
 </table>
 
 <p align="center">
-  <em>Middle and top layer plates</em>
+  <img src="docs/mechanical-iteration-loop.svg" alt="Measure, model, print, fit-test, and refine loop used across four plate versions" width="1000"/>
+  <br>
+  <em>The physical fit test converted measurement errors into specific CAD corrections.</em>
 </p>
+
+The process was not simply “print until it looks right.” Each loop checked whether components fitted without interference, whether cables could reach without being sharply bent, whether switches remained accessible, and whether the camera and sensors had an unobstructed view. Repeating the cycle improved component placement, cable management, and service access.
+
+### 3D-Printing Configuration
+
+The final plates were produced by FDM printing on an **ELEGOO Centauri Carbon** using **Rapid PETG**. ELEGOO lists PETG as a supported material and specifies a **0.1–0.4 mm** layer-height range for this printer; our **0.12 mm** setting is near the fine-detail end of that range.
+
+| Setting | Final value | Engineering purpose |
+|---|---:|---|
+| Printer | ELEGOO Centauri Carbon | Enclosed CoreXY FDM printer used for the final plates |
+| Material | Rapid PETG | Tougher functional material for plates handled and reassembled repeatedly |
+| Layer height | 0.12 mm | Finer vertical resolution and more controlled fit, at the cost of longer print time |
+| Wall loops | 3 | Adds perimeter stiffness around the plate edges and mounting holes |
+| Sparse infill pattern | Gyroid | Distributes internal support in multiple directions without using solid infill everywhere |
+| Sparse infill density | 25% | Balances rigidity, material use, mass, and print time |
+
+Compared with the printer's commonly recommended **0.20 mm** layer height, a 0.12 mm layer produces approximately:
+
+$$\frac{0.20}{0.12}=1.67$$
+
+or **67% more layers for the same part height**. We accepted the longer printing time because dimensional fit and clean mount features were more important than minimum production time for the final plates.
+
+Printer reference: [ELEGOO Centauri Carbon specifications](https://eu.elegoo.com/en-be/products/centauri-carbon).
+
+### Mechanical Design Trade-offs
+
+| Decision | Benefit | Trade-off |
+|---|---|---|
+| Rear-wheel drive with front steering | Car-like motion and compliance with the WRO mobility rules | Requires steering-link calibration and has a larger turning radius than differential drive |
+| Two-level electronics structure | Provides enough mounting area and improves component organization | Raises the assembled height and can raise the center of mass |
+| Rapid PETG printed plates | Tough functional parts that can be redesigned and reproduced | Printing at 0.12 mm takes longer, and dimensional errors require reprinting |
+| 25% gyroid infill with three walls | Balances stiffness and material use | Not as rigid as a fully solid plate |
+| Friction-fit ultrasonic mounts | Fast installation and removal without extra screws | Fit depends strongly on printing accuracy and material tolerance |
+| Rear ToF parking sensor | Direct rear-clearance measurement during parking | Adds a dedicated sensor and mount used only in the parking phase |
 
 ## Steering Calibration
 
-One advantage of the chassis kit we used is that it allows adjustments to the steering geometry by changing the lengths of the steering rods. We utilized this flexibility to implement an **Ackermann steering mechanism**, where the inner wheel turns at a greater angle than the outer wheel during cornering.
+The chassis allows the steering-rod lengths to be adjusted. We used this to approximate **Ackermann steering**, where the inner front wheel turns more sharply than the outer front wheel because the two wheels follow different radii around the same instantaneous center of rotation.
 
 <p align="center">
   <img src="image-6.png" alt="Ackermann steering mechanism" width="500"/>
 </p>
 
-This difference in steering angles is necessary because the inner and outer wheels follow different turning radii. The inner wheel travels along a smaller radius, requiring a larger steering angle to ensure that all wheels rotate around the same instantaneous center of rotation.
+For low-speed cornering, the centerline steering angle is:
 
-To determine the required steering angle for **low-speed cornering**, where tire slip can be neglected, we used the following relationship:
+$$\delta=\tan^{-1}\left(\frac{L}{R}\right)$$
 
-```text
-δ = atan(L / R)
-```
+Using the measured wheelbase $L=137$ mm and turning radius $R=525$ mm:
 
-Where:
+$$\delta=\tan^{-1}\left(\frac{137}{525}\right)=14.6^\circ\approx15^\circ$$
 
-```text
-δ = steering angle of the vehicle centerline
-L = wheelbase
-R = turning radius
-```
+The measured front track width $t=117$ mm lets us estimate the ideal inner and outer wheel angles:
 
-For our robot, we measured:
+$$\delta_{in}=\tan^{-1}\left(\frac{L}{R-t/2}\right)
+=\tan^{-1}\left(\frac{137}{525-58.5}\right)=16.4^\circ$$
 
-```text
-L = 137 mm
-R = 525 mm
-```
+$$\delta_{out}=\tan^{-1}\left(\frac{L}{R+t/2}\right)
+=\tan^{-1}\left(\frac{137}{525+58.5}\right)=13.2^\circ$$
 
-Substituting these values:
+| Steering reference | Calculated angle |
+|---|---:|
+| Vehicle centerline | 14.6° |
+| Inner front wheel | 16.4° |
+| Outer front wheel | 13.2° |
+| Inner-to-outer difference | 3.2° |
 
-```text
-δ = atan(137 / 525)
-δ = 14.6°
-```
-
-After converting the result from radians to degrees, the required steering angle was approximately **15°**.
-
-We then calibrated the steering mechanism by adjusting the steering rods until the wheels achieved the desired Ackermann geometry, with approximately a **15° steering angle** for the centerline turn.
+We adjusted the steering rods until the wheels followed this geometry as closely as the kit mechanism allowed. This reduces tire scrub compared with forcing both front wheels to the same angle.
 
 ## Mounts
 
-To ensure reliable performance during the competition, important components such as the **Pi Camera** and distance sensors required custom-designed mounts to keep them securely positioned while maintaining accessibility and accuracy.
+The camera and distance sensors use custom-designed mounts so their position does not change during a run while remaining accessible for maintenance.
 
-### ToF Sensor Mount — Initial Design
+### ToF Sensor Mount — Initial Design and Final Rear Use
 
-Our first approach was to use **Time-of-Flight (ToF) sensors** for obstacle detection. After several design iterations, we developed a dedicated mount that provided a stable position and proper alignment for the sensors.
+Our first approach used multiple Time-of-Flight sensors for wall sensing. After several design iterations, we produced a stable ToF mount.
 
 <p align="center">
   <img src="image-8.png" alt="ToF sensor mount design" width="500"/>
   <br>
-  <em>Initial ToF sensor mount design.</em>
+  <em>ToF sensor mount design.</em>
 </p>
 
-However, during testing, we discovered that ToF sensors were not ideal as our main wall sensors in the WRO mat environment. Their infrared-based measurements were affected by dark surfaces and target geometry. We therefore replaced the side-facing ToF plan with ultrasonic wall sensing, while retaining one rear VL53L0X for short-range parking alignment.
+Testing showed that ToF sensors were not suitable as our main wall sensors on the WRO mat because infrared return varied with dark surfaces and target geometry. We replaced the side-facing ToF plan with ultrasonic wall sensing. **One VL53L0X remains mounted on the back of the vehicle for short-range parking alignment.**
 
 ### Ultrasonic Sensor Mount — Final Design
 
-After evaluating different sensor options, we switched to **ultrasonic sensors**, which required a new mounting solution.
+The left and right ultrasonic sensors required a different mount that kept both transducers clear of the chassis.
 
 <p align="center">
   <img src="image-9.png" alt="Ultrasonic sensor mount design" width="500"/>
@@ -211,19 +308,19 @@ After evaluating different sensor options, we switched to **ultrasonic sensors**
   <em>Final ultrasonic sensor mount design.</em>
 </p>
 
-This design uses a **friction-fit mechanism** to securely hold the sensor in place, eliminating the need for screws while making installation and adjustments faster and easier.
+The mount uses a **friction-fit mechanism** to hold the sensor without screws. This makes installation and replacement fast, but it also made print accuracy important: an undersized opening could damage the board, while an oversized opening allowed the sensor angle to change.
 
 ### Pi Camera Mount
 
-The camera is one of the most important components for navigation, requiring a stable and precise mounting position. We designed a dedicated mount that keeps the camera firmly fixed while providing an unobstructed field of view for the lens.
+The camera requires a stable, repeatable position because a change in height or angle changes the apparent location of the traffic pillars. We designed a screw-mounted holder with an unobstructed lens opening.
 
 <p align="center">
   <img src="image-10.png" alt="Pi Camera mount design" width="500"/>
   <br>
-  <em>Custom Pi Camera mount positioned at the front of the robot.</em>
+  <em>Custom camera mount on the second level at the front of the robot.</em>
 </p>
 
-The mount secures the camera using screws and includes an opening for the lens. It is installed vertically on the robot's second level, facing forward with its optical axis approximately parallel to the field. This gives it an unobstructed view of the red and green traffic pillars. The **"SN"** engraved on our mounts refers to our team name, **Sunbird Nomads**.
+The camera is installed vertically on the second level, facing forward with its optical axis approximately parallel to the field. The **“SN”** engraving identifies the mount as a Sunbird Nomads part.
 
 # Power & Sensor Architecture
 
