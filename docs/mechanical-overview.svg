@@ -1,0 +1,98 @@
+<svg viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">Sunbird Nomads mechanical dimensions</title>
+  <desc id="desc">Top and side views showing the vehicle length, width, height, front track, wheel diameter and ground clearance, followed by rule-envelope, wheel-travel and parking calculations.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2d70a5"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#12243c" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <style>
+    .dim { stroke:#2d70a5; stroke-width:2; marker-start:url(#arrow); marker-end:url(#arrow); }
+    .guide { stroke:#9fb6c8; stroke-width:1.5; stroke-dasharray:5 5; }
+    .wheel { fill:#26384f; stroke:#12243c; stroke-width:2; }
+    .hub { fill:#dfa527; stroke:#fff; stroke-width:2; }
+    .pulse { animation:pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:.55} 50%{opacity:1} }
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+  </style>
+
+  <rect width="1200" height="720" rx="20" fill="#fff"/>
+  <text x="600" y="43" text-anchor="middle" font-size="25" font-weight="700" fill="#12243c">Mechanical Dimensions and Field Fit</text>
+  <text x="600" y="68" text-anchor="middle" font-size="13" fill="#667085">Measured assembled dimensions combined with the published chassis width</text>
+
+  <rect x="45" y="95" width="650" height="410" rx="18" fill="#f5f8fb"/>
+  <text x="70" y="127" font-size="17" font-weight="700" fill="#12243c">Top view</text>
+  <text x="645" y="127" text-anchor="end" font-size="12" fill="#667085">front →</text>
+
+  <rect x="190" y="180" width="360" height="210" rx="22" fill="#e8edf3" stroke="#12243c" stroke-width="3" filter="url(#shadow)"/>
+  <rect x="275" y="215" width="190" height="140" rx="12" fill="#fff" stroke="#9fb6c8" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="370" y="275" text-anchor="middle" font-size="16" font-weight="700" fill="#12243c">two-level chassis</text>
+  <text x="370" y="298" text-anchor="middle" font-size="12" fill="#667085">custom PETG plates</text>
+
+  <rect x="155" y="190" width="52" height="66" rx="14" class="wheel"/>
+  <rect x="155" y="314" width="52" height="66" rx="14" class="wheel"/>
+  <rect x="533" y="190" width="52" height="66" rx="14" class="wheel" transform="rotate(-8 559 223)"/>
+  <rect x="533" y="314" width="52" height="66" rx="14" class="wheel" transform="rotate(8 559 347)"/>
+  <circle cx="181" cy="223" r="9" class="hub"/><circle cx="181" cy="347" r="9" class="hub"/>
+  <circle cx="559" cy="223" r="9" class="hub"/><circle cx="559" cy="347" r="9" class="hub"/>
+
+  <line x1="190" y1="405" x2="190" y2="445" class="guide"/>
+  <line x1="550" y1="405" x2="550" y2="445" class="guide"/>
+  <line x1="190" y1="435" x2="550" y2="435" class="dim"/>
+  <text x="370" y="461" text-anchor="middle" font-size="14" font-weight="700" fill="#2d70a5">248 mm overall length</text>
+
+  <line x1="135" y1="180" x2="175" y2="180" class="guide"/>
+  <line x1="135" y1="390" x2="175" y2="390" class="guide"/>
+  <line x1="150" y1="180" x2="150" y2="390" class="dim"/>
+  <text x="118" y="285" text-anchor="middle" font-size="14" font-weight="700" fill="#2d70a5" transform="rotate(-90 118 285)">146 mm chassis width</text>
+
+  <line x1="610" y1="223" x2="575" y2="223" class="guide"/>
+  <line x1="610" y1="347" x2="575" y2="347" class="guide"/>
+  <line x1="600" y1="223" x2="600" y2="347" class="dim"/>
+  <text x="630" y="285" text-anchor="middle" font-size="13" font-weight="700" fill="#2d70a5" transform="rotate(-90 630 285)">117 mm front track</text>
+
+  <rect x="720" y="95" width="435" height="410" rx="18" fill="#fcf7ec"/>
+  <text x="745" y="127" font-size="17" font-weight="700" fill="#12243c">Side view</text>
+  <line x1="755" y1="410" x2="1120" y2="410" stroke="#9a7a2f" stroke-width="3"/>
+  <rect x="790" y="235" width="285" height="92" rx="14" fill="#e8edf3" stroke="#12243c" stroke-width="3" filter="url(#shadow)"/>
+  <rect x="845" y="175" width="175" height="62" rx="10" fill="#f7ecd2" stroke="#dfa527" stroke-width="2"/>
+  <text x="932" y="201" text-anchor="middle" font-size="13" font-weight="700" fill="#12243c">upper electronics layer</text>
+  <text x="932" y="220" text-anchor="middle" font-size="11" fill="#667085">camera on second level</text>
+  <circle cx="835" cy="355" r="47" class="wheel"/>
+  <circle cx="1030" cy="355" r="47" class="wheel"/>
+  <circle cx="835" cy="355" r="13" class="hub"/><circle cx="1030" cy="355" r="13" class="hub"/>
+
+  <line x1="1100" y1="175" x2="1132" y2="175" class="guide"/>
+  <line x1="1100" y1="410" x2="1132" y2="410" class="guide"/>
+  <line x1="1120" y1="175" x2="1120" y2="410" class="dim"/>
+  <text x="1090" y="292" text-anchor="middle" font-size="14" font-weight="700" fill="#2d70a5" transform="rotate(-90 1090 292)">126 mm assembled height</text>
+
+  <line x1="770" y1="308" x2="770" y2="402" class="dim"/>
+  <text x="755" y="355" text-anchor="middle" font-size="13" font-weight="700" fill="#2d70a5" transform="rotate(-90 755 355)">Ø64 mm wheel</text>
+  <line x1="935" y1="327" x2="935" y2="410" class="guide"/>
+  <line x1="955" y1="391" x2="955" y2="410" class="dim"/>
+  <text x="970" y="399" font-size="12" font-weight="700" fill="#2d70a5">19 mm clearance</text>
+
+  <rect x="45" y="535" width="350" height="135" rx="16" fill="#eaf3fb"/>
+  <text x="70" y="566" font-size="15" font-weight="700" fill="#12243c">WRO size-envelope margin</text>
+  <text x="70" y="594" font-size="13" fill="#446078">Length: 300 − 248 = <tspan font-weight="700">52 mm</tspan></text>
+  <text x="70" y="617" font-size="13" fill="#446078">Width: 200 − 146 = <tspan font-weight="700">54 mm</tspan></text>
+  <text x="70" y="640" font-size="13" fill="#446078">Height: 300 − 126 = <tspan font-weight="700">174 mm</tspan></text>
+  <circle cx="365" cy="560" r="8" fill="#65a56d" class="pulse"/>
+
+  <rect x="425" y="535" width="350" height="135" rx="16" fill="#f7ecd2"/>
+  <text x="450" y="566" font-size="15" font-weight="700" fill="#12243c">Wheel travel per revolution</text>
+  <text x="450" y="602" font-size="15" fill="#725b24">C = πD = π(64)</text>
+  <text x="450" y="631" font-size="19" font-weight="700" fill="#12243c">C ≈ 201.1 mm</text>
+  <text x="450" y="652" font-size="11" fill="#667085">Useful for speed and distance calculations</text>
+
+  <rect x="805" y="535" width="350" height="135" rx="16" fill="#eef5ee"/>
+  <text x="830" y="566" font-size="15" font-weight="700" fill="#12243c">WRO parking geometry</text>
+  <text x="830" y="594" font-size="13" fill="#4f6d52">Parking length: 1.5(248) = <tspan font-weight="700">372 mm</tspan></text>
+  <text x="830" y="617" font-size="13" fill="#4f6d52">Length allowance: 372 − 248 = <tspan font-weight="700">124 mm</tspan></text>
+  <text x="830" y="640" font-size="13" fill="#4f6d52">Width allowance: 200 − 146 = <tspan font-weight="700">54 mm</tspan></text>
+  <text x="830" y="660" font-size="11" fill="#667085">Rear ToF supports final parking clearance</text>
+</svg>
