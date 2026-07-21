@@ -570,68 +570,179 @@ The switch is useful for isolation, but it is **not** a substitute for a battery
 
 ## 🚀 Software Architecture & Obstacle Strategy
 
-To test and calibrate the robot, we built a live browser dashboard that runs alongside the control code on the Raspberry Pi — showing sensor readings, drive state, and steering in real time, with manual override controls for tuning before autonomous runs.
+The uploaded Raspberry Pi program is a **testing and calibration controller for the Open Challenge**. It combines wall-distance sensing, a deterministic drive state machine, actuator control, live telemetry, and emergency-stop supervision in one inspectable system.
 
-<img src="docs/dashboard-screenshot.png" width="500">
+<p align="center">
+  <img src="docs/software-architecture.svg" alt="Sensor-to-actuator architecture of the Raspberry Pi testing controller" width="950"/>
+  <br>
+  <em>Control flow in the uploaded testing controller. The rear ToF is displayed as telemetry; it does not influence the current turn decision.</em>
+</p>
 
-*The dashboard shown in its idle state — sensor readings populate live once connected to the robot.*
+### Software Evidence in This Repository
 
-**This is a testing and calibration build for the Open Challenge (Task 1), not competition code** — see [`src/testing/`](src/testing) for the full source.
+| File | Responsibility |
+|---|---|
+| [`src/testing/dashboard.py`](src/testing/dashboard.py) | GPIO setup, sensor acquisition, filtering, turn decisions, state machine, motor/servo commands, watchdog, and HTTP API |
+| [`src/testing/dashboard.html`](src/testing/dashboard.html) | Live sensor/state display and calibration controls |
+| [`src/testing/README.md`](src/testing/README.md) | Wiring, installation, launch procedure, safety notes, and known limitations |
 
-### Drive state machine
+The repository does **not** currently contain a `src/final/` competition controller or the camera-based red/green pillar-avoidance program. The obstacle hardware is documented above, but this section does not claim obstacle behavior that cannot be reproduced from the uploaded source.
 
-The robot runs as a simple state machine rather than a continuous control loop:
+### Control Flow
+
+The robot uses explicit states instead of mixing sensing, steering, and motor commands in one loop:
 
 ```mermaid
 flowchart LR
-    stopped -->|Start pressed| forward
-    forward -->|turn confirmed| turn_steer
-    turn_steer -->|servo settled, 0.45s| turn_drive
-    turn_drive -->|turn_duration elapsed| turn_recenter
-    turn_recenter -->|servo settled, 0.45s| forward
-    forward -->|Stop / Emergency| stopped
+    stopped -->|Start| forward
+    forward -->|3 matching decisions after 1.5 s| turn_steer
+    turn_steer -->|Servo settled: 0.45 s| turn_drive
+    turn_drive -->|Timed turn complete| turn_recenter
+    turn_recenter -->|Servo settled: 0.45 s| forward
+    forward -->|Stop, emergency, or watchdog| stopped
 ```
 
-Every phase transition explicitly stops the motor first, moves the servo, waits for it to physically settle, then resumes — this was a deliberate choice over changing steering angle while still driving, since accessories mounted this close to the servo left very little margin for the wheel to catch a mount mid-turn.
-
-### Turn decision — the math
-
-Every ~340 ms sensor cycle, both ultrasonic readings are median-filtered (window of 3, to reject single-sample noise), giving left distance $L$ and right distance $R$ in cm. We compute:
-
-$$\Delta = |L - R|, \qquad r = \frac{\max(L,R)}{\max(\min(L,R),\ 1)}$$
-
-A turn is only considered when:
-
-$$\Delta \geq 35 \text{ cm} \quad \text{OR} \quad (\Delta \geq 20 \text{ cm} \ \text{AND} \ r \geq 1.8)$$
-
-The ratio clause exists because a fixed centimeter threshold alone misses proportionally large gaps at short range — 15 cm vs. 30 cm ($\Delta=15$) is a real opening but falls under a flat 20 cm cutoff, while 20 cm vs. 40 cm ($\Delta=20,\ r=2.0$) clearly should trigger. Combining both catches that case without lowering the flat threshold enough to react to noise.
-
-Even when the threshold is crossed, the robot doesn't turn immediately — it requires **3 consecutive sensor cycles** to agree on the same direction before committing, and at least **1.5 seconds** of forward driving since the last decision. Both are debounce measures: the first against a single noisy reading, the second against immediately re-triggering right after finishing a turn.
-
-Once committed, it's a **timed maneuver, not a sensor-confirmed exit**: stop → steer → drive for a fixed duration → stop → recenter → resume. The turn doesn't end because the sensors say it's clear; it ends because the clock says so. This is simpler and more predictable to tune than closing the loop on sensor feedback, at the cost of needing the timing recalibrated if speed or the track layout changes.
-
-### Steering angle → servo duty cycle
-
-The servo is commanded by PWM duty cycle, mapped linearly from the calibrated angle range:
-
-$$\text{duty}\% = 2.5 + \frac{\theta - 30}{120}\times 10$$
-
-| Position | Angle | Duty cycle |
+| Current state | Exit condition | Action before next state |
 |---|---|---|
+| `stopped` | Start command | Center steering, begin a new section, drive forward |
+| `forward` | Same turn candidate confirmed 3 times after the 1.5 s lockout | Stop motor and command the calibrated turn angle |
+| `turn_steer` | 0.45 s settling time expires | Drive forward at the turn-speed setting |
+| `turn_drive` | Configured turn duration expires | Stop motor and command center steering |
+| `turn_recenter` | 0.45 s settling time expires | Begin the next forward section |
+| Any active state | Stop, emergency stop, or heartbeat older than 3 s | Stop motor and recenter steering |
+
+Stopping the drive motor before changing steering reduces the chance of a wheel catching a nearby mount. The trade-off is time: with the default 1.0 s turn, a complete turn sequence includes approximately **0.9 s of stationary servo-settling time** in addition to the driven turn.
+
+### Sensor Acquisition and Noise Rejection
+
+Each HC-SR04-type reading follows the same guarded sequence:
+
+1. Reject an Echo pin that is already stuck HIGH.
+2. Send a **10 µs** Trigger pulse.
+3. Apply a **30 ms** timeout while waiting for the echo to start and another timeout while waiting for it to finish.
+4. Convert pulse width to distance with $d=t\times17{,}150$ cm.
+5. Accept only readings between **2 cm and 400 cm**.
+6. Keep a rolling median of up to three valid samples.
+
+The left and right sensors are fired sequentially with a **60 ms delay after each reading**, reducing ultrasonic crosstalk. A three-sample median rejects a single outlier:
+
+```text
+Raw samples:      [48, 182, 49] cm
+Median-filtered:  49 cm
+```
+
+This improves stability, but a turn must remain visible across several acquisition passes before the car reacts.
+
+### Wall-Opening Turn Decision
+
+Let $L$ and $R$ be the filtered left and right distances:
+
+$$
+\Delta = |L-R|
+\qquad
+r = \frac{\max(L,R)}{\max(\min(L,R),1)}
+$$
+
+A turn candidate is produced when:
+
+$$
+\Delta \ge 35\text{ cm}
+\quad\text{or}\quad
+\left(\Delta \ge 20\text{ cm}\ \land\ r \ge 1.8\right)
+$$
+
+If the condition is true, the robot selects the side with the larger measured distance because that side is interpreted as the opening. The two-part rule combines an absolute gap with a proportional comparison:
+
+| Example | $\Delta$ | $r$ | Result |
+|---|---:|---:|---|
+| $L=48$, $R=51$ cm | 3 cm | 1.06 | Continue straight |
+| $L=20$, $R=40$ cm | 20 cm | 2.00 | Right-turn candidate |
+| $L=25$, $R=61$ cm | 36 cm | 2.44 | Right-turn candidate |
+| $L=60$, $R=24$ cm | 36 cm | 2.50 | Left-turn candidate |
+
+A candidate is accepted only after **three consecutive decisions agree** and the robot has driven forward for at least **1.5 s** since the previous turn. This prevents a single reflection or the previous corner from immediately triggering another maneuver.
+
+### Timed Turn Model
+
+Once a turn is accepted, its exit is based on time rather than a measured heading:
+
+```text
+stop → steer → wait → drive for turn_duration → stop → recenter → wait
+```
+
+The dashboard's distance display uses the open-loop estimate
+
+$$
+v_{\text{est}}=v_{\max}\frac{u}{100},
+\qquad
+s_{\text{est}}=v_{\text{est}}t
+$$
+
+where $u$ is PWM percentage. With the code defaults $v_{\max}=50$ cm/s, turn PWM $u=45\%$, and $t=1.0$ s:
+
+$$
+s_{\text{est}}=50\times0.45\times1.0=22.5\text{ cm}
+$$
+
+This is a tuning model, not a measured travel distance. Battery voltage, L298N voltage loss, tire slip, floor friction, and motor loading can all change the real turn.
+
+### Steering Calibration
+
+The S3003 servo command is mapped linearly from the calibrated 30°–150° range to a 2.5%–12.5% PWM duty range:
+
+$$
+\text{duty}(\%)=2.5+\frac{\theta-30}{120}\times10
+$$
+
+| Steering command | Angle | Calculated duty cycle |
+|---|---:|---:|
 | Left | 81° | 6.75% |
 | Center | 106° | 8.83% |
 | Right | 131° | 10.92% |
 
-### Safety systems
+These values are **commanded angles**. The servo has no position sensor, so the program cannot verify the physical wheel angle.
 
-- **Heartbeat watchdog:** the browser sends a signal once per second; if it's missing for **3 seconds**, the robot force-stops and recenters automatically, whether or not anyone pressed a button.
-- **Motor always stops before steering changes** — never commanded to turn and drive in the same instant.
-- **Clean shutdown on Ctrl+C / SIGTERM:** stop motor, recenter servo, stop PWM, release GPIO.
+### Calibration Parameters Exposed by the Dashboard
 
-### Known constraints (by design, not oversight)
+| Parameter | Default | Purpose |
+|---|---:|---|
+| Forward speed | 55% PWM | Straight-section motor command |
+| Turn speed | 45% PWM | Motor command during the timed corner |
+| Turn duration | 1.0 s | Determines how long the car drives with steering applied |
+| Maximum-speed estimate | 50 cm/s | Converts PWM percentage into dashboard-only speed and distance estimates |
+| Manual steering angle | Available only while stopped | Checks linkage travel without driving |
 
-- Speed and distance are **open-loop estimates** — `estimated_speed = max_speed_cm_s × pwm% / 100`, integrated over time. There's no wheel encoder, so these numbers are useful for tuning consistency but aren't ground truth.
-- The servo has no position feedback; the dashboard shows the *commanded* angle only, never a measured one.
+Keeping these values adjustable shortened the test cycle: change one parameter, run the same maneuver, observe telemetry, and compare the result without editing the Python source.
+
+### Failure Handling and Safety
+
+| Condition detected by the code | Response |
+|---|---|
+| One noisy distance sample | Median filter prevents it from dominating the last three valid samples |
+| Echo stuck HIGH, timeout, or value outside 2–400 cm | Reading becomes invalid (`None`) |
+| Both ultrasonic readings invalid | No turn is selected |
+| Only one ultrasonic reading invalid | Current code treats the invalid side as open and selects that side |
+| Browser heartbeat missing for more than 3 s | Finish the active section, stop the motor, and recenter steering |
+| Stop or emergency-stop command | Stop motor and return to `stopped` |
+| Ctrl+C, SIGINT, or SIGTERM | Stop motor, recenter servo, stop PWM, and release GPIO |
+
+Treating one invalid sensor as open space avoids freezing when a wall gives no echo, but it also creates a clear risk: a disconnected sensor can look like a valid opening. This behavior is documented because it is an important boundary of the uploaded controller.
+
+### Engineering Trade-offs
+
+| Decision | Benefit | Cost |
+|---|---|---|
+| Sequential ultrasonic firing | Reduces crosstalk | Slower sensing cycle |
+| Median of three samples | Rejects isolated spikes | Adds response delay |
+| Three matching decisions | Avoids false turns | Opening must remain visible longer |
+| 1.5 s post-turn lockout | Prevents immediate retriggering | Cannot accept a new corner during the lockout |
+| Stop before steering | Protects the close mechanical layout | Adds 0.9 s stationary time per maneuver |
+| Timed turns | Simple and reproducible to tune | Sensitive to speed, voltage, and surface changes |
+| Browser heartbeat | Stops the robot if supervision disappears | Safe operation depends on the dashboard connection |
+| Open-loop speed estimate | Requires no encoder | Cannot measure true speed, distance, or wheel slip |
+
+The architecture is intentionally simple enough to debug subsystem by subsystem. Its strongest feature is transparency: every autonomous action can be traced to specific sensor values, thresholds, confirmation counts, states, and GPIO commands.
+
 
 ## 🧭 Systems Thinking & Engineering Decisions
 
