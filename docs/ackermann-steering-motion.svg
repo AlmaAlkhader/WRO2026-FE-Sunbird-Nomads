@@ -1,0 +1,71 @@
+<svg viewBox="0 0 1000 640" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+<style>
+  .wheelL { animation: steerL 6s ease-in-out infinite; }
+  .wheelR { animation: steerR 6s ease-in-out infinite; }
+  @keyframes steerL {
+    0% { transform: rotate(0deg); }
+    20% { transform: rotate(-44.1deg); }
+    30% { transform: rotate(-44.1deg); }
+    50% { transform: rotate(0deg); }
+    70% { transform: rotate(27.9deg); }
+    80% { transform: rotate(27.9deg); }
+    100% { transform: rotate(0deg); }
+  }
+  @keyframes steerR {
+    0% { transform: rotate(0deg); }
+    20% { transform: rotate(-27.9deg); }
+    30% { transform: rotate(-27.9deg); }
+    50% { transform: rotate(0deg); }
+    70% { transform: rotate(44.1deg); }
+    80% { transform: rotate(44.1deg); }
+    100% { transform: rotate(0deg); }
+  }
+  .icrLeft { animation: showLeft 6s ease-in-out infinite; }
+  .icrRight { animation: showRight 6s ease-in-out infinite; }
+  @keyframes showLeft {
+    0%,14% { opacity: 0; }
+    20%,30% { opacity: 1; }
+    36%,100% { opacity: 0; }
+  }
+  @keyframes showRight {
+    0%,64% { opacity: 0; }
+    70%,80% { opacity: 1; }
+    86%,100% { opacity: 0; }
+  }
+</style>
+<rect x="0" y="0" width="1000" height="640" fill="#ffffff"/>
+<text x="500.0" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#12243c">Ackermann Steering, In Motion</text>
+<text x="500.0" y="58" text-anchor="middle" font-size="12.5" fill="#5b6472">Our chassis: 137 mm wheelbase, 117 mm front track — inner wheel always turns sharper than the outer wheel</text>
+<rect x="369.0" y="206.0" width="262.0" height="314.0" rx="16" fill="#eef0f3"/>
+<line x1="383.0" y1="500" x2="617.0" y2="500" stroke="#5b6472" stroke-width="2"/>
+<rect x="374.0" y="477.0" width="18" height="46" rx="4" fill="#12243c"/>
+<rect x="608.0" y="477.0" width="18" height="46" rx="4" fill="#12243c"/>
+<text x="500" y="534" text-anchor="middle" font-size="11" fill="#5b6472">rear axle — fixed, no steering</text>
+<line x1="383.0" y1="226.0" x2="617.0" y2="226.0" stroke="#5b6472" stroke-width="2" stroke-dasharray="4,4"/>
+<g class="wheelL" style="transform-origin:383.0px 226.0px;"><rect x="374.0" y="203.0" width="18" height="46" rx="4" fill="#12243c"/></g>
+<g class="wheelR" style="transform-origin:617.0px 226.0px;"><rect x="608.0" y="203.0" width="18" height="46" rx="4" fill="#12243c"/></g>
+<text x="500" y="196.0" text-anchor="middle" font-size="11" fill="#5b6472">front axle — steered by the S3003 servo + linkage</text>
+<text x="639.0" y="363.0" font-size="11" fill="#12243c" font-weight="600">wheelbase 137 mm</text>
+<text x="500" y="552" text-anchor="middle" font-size="11" fill="#12243c" font-weight="600">front track 117 mm</text>
+<g class="icrLeft">
+<line x1="100.0" y1="500" x2="383.0" y2="226.0" stroke="#dfa527" stroke-width="1.3" stroke-dasharray="5,4"/>
+<line x1="100.0" y1="500" x2="617.0" y2="226.0" stroke="#dfa527" stroke-width="1.3" stroke-dasharray="5,4"/>
+<line x1="100.0" y1="500" x2="383.0" y2="500" stroke="#dfa527" stroke-width="1.3" stroke-dasharray="5,4"/>
+<line x1="100.0" y1="500" x2="617.0" y2="500" stroke="#dfa527" stroke-width="1.3" stroke-dasharray="5,4"/>
+<circle cx="100.0" cy="500" r="6" fill="#dfa527"/>
+<text x="100.0" y="486" text-anchor="middle" font-size="11" font-weight="700" fill="#dfa527">ICR</text>
+<text x="375.0" y="234.0" text-anchor="end" font-size="11" font-weight="700" fill="#12243c">inner 44°</text>
+<text x="625.0" y="234.0" text-anchor="start" font-size="11" font-weight="700" fill="#12243c">outer 28°</text>
+</g>
+<g class="icrRight">
+<line x1="900.0" y1="500" x2="383.0" y2="226.0" stroke="#dfa527" stroke-width="1.3" stroke-dasharray="5,4"/>
+<line x1="900.0" y1="500" x2="617.0" y2="226.0" stroke="#dfa527" stroke-width="1.3" stroke-dasharray="5,4"/>
+<line x1="900.0" y1="500" x2="383.0" y2="500" stroke="#dfa527" stroke-width="1.3" stroke-dasharray="5,4"/>
+<line x1="900.0" y1="500" x2="617.0" y2="500" stroke="#dfa527" stroke-width="1.3" stroke-dasharray="5,4"/>
+<circle cx="900.0" cy="500" r="6" fill="#dfa527"/>
+<text x="900.0" y="486" text-anchor="middle" font-size="11" font-weight="700" fill="#dfa527">ICR</text>
+<text x="625.0" y="234.0" text-anchor="start" font-size="11" font-weight="700" fill="#12243c">inner 44°</text>
+<text x="375.0" y="234.0" text-anchor="end" font-size="11" font-weight="700" fill="#12243c">outer 28°</text>
+</g>
+<text x="500.0" y="624" text-anchor="middle" font-size="10.5" fill="#5b6472">Illustrative turn at R = 200 mm — angles from cot(&#948;) geometry using our measured wheelbase and track, not a manufacturer spec.</text>
+</svg>
