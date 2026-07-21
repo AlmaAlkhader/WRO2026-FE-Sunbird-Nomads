@@ -1,0 +1,18 @@
+<svg viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',Helvetica,Arial,sans-serif">
+<style>.t{font-size:22px;font-weight:700;fill:#12243c}.s{font-size:11px;fill:#5b6472}.h{font-size:13px;font-weight:700;fill:#12243c}.b{font-size:11px;fill:#46505e}</style>
+<rect width="1000" height="560" fill="#fff"/><text x="500" y="35" text-anchor="middle" class="t">Region of Interest and Closest-Pillar Selection</text>
+<text x="500" y="56" text-anchor="middle" class="s">Conceptual camera frame — ROI coordinates remain calibration parameters rather than fixed assumptions</text>
+<rect x="75" y="95" width="590" height="350" rx="12" fill="#dce4ec"/><rect x="75" y="95" width="590" height="115" rx="12" fill="#c7d5e1"/>
+<text x="370" y="150" text-anchor="middle" class="s">ignored upper frame: distant walls and irrelevant background</text>
+<path d="M75 445L205 235H535L665 445Z" fill="#8f97a1"/><path d="M270 445L330 235H410L470 445Z" fill="#f0f2f4"/>
+<rect x="150" y="205" width="440" height="220" fill="none" stroke="#dfa527" stroke-width="4" stroke-dasharray="10 7"/>
+<text x="165" y="230" class="h" fill="#dfa527">ROI = frame[y₀:y₁, x₀:x₁]</text>
+<rect x="250" y="260" width="62" height="150" rx="5" fill="#d73333"/><text x="281" y="337" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">RED</text>
+<rect x="445" y="300" width="42" height="110" rx="5" fill="#2f9e61"/><text x="466" y="358" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">GREEN</text>
+<path d="M242 252H320V417H242Z" fill="none" stroke="#d73333" stroke-width="2"/><path d="M438 292H494V417H438Z" fill="none" stroke="#2f9e61" stroke-width="2"/>
+<text x="281" y="470" text-anchor="middle" class="b">Aᵣ = larger contour</text><text x="466" y="470" text-anchor="middle" class="b">Aᵍ = smaller contour</text>
+<rect x="720" y="105" width="220" height="330" rx="14" fill="#f7ecd2"/><text x="830" y="137" text-anchor="middle" class="h">Selection logic</text>
+<text x="745" y="174" class="b">1. Crop to the useful track area</text><text x="745" y="202" class="b">2. Apply red and green HSV masks</text><text x="745" y="230" class="b">3. Find contours in each mask</text><text x="745" y="258" class="b">4. Reject area ≤ 800 px²</text><text x="745" y="286" class="b">5. Keep largest contour per colour</text>
+<rect x="745" y="315" width="170" height="74" rx="10" fill="#12243c"/><text x="830" y="342" text-anchor="middle" font-size="12" fill="#fff">selected = arg max</text><text x="830" y="366" text-anchor="middle" font-size="13" fill="#dfa527">Aᵣ , Aᵍ</text>
+<text x="830" y="420" text-anchor="middle" class="s">Here, red is handled first.</text>
+<text x="500" y="520" text-anchor="middle" class="b">Using contour area as a proximity cue is simple and fast, but perspective and partial occlusion can affect the estimate.</text></svg>
