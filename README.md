@@ -116,8 +116,7 @@ The mechanical system uses a conventional car layout: a **single rear drive axle
 
 ### Chassis and Drive Layout
 
-Our robot is based on the [**RoboticX 4WD RC Smart Car Chassis with S3003 Servo and Bearing Kit**](https://roboticx.ps/product/4wd-rc-smart-car-chassis-with-s3003-metal-servo-bearing-kit-for-arduino/). Despite the product name, the seller describes this chassis as **rear-wheel drive with front-wheel steering**. The kit includes one S3003 steering servo, a 25 mm all-metal gearmotor, a mechanically connected rear axle, bearings, steering rods, and four wheels. The [**L298N dual motor controller**](https://roboticx.ps/product/dual-motor-controller-module-l298n/) was purchased separately.
-
+Our robot is based on the [**RoboticX 4WD RC Smart Car Chassis with S3003 Servo and Bearing Kit**](https://roboticx.ps/product/4wd-rc-smart-car-chassis-with-s3003-metal-servo-bearing-kit-for-arduino/). 
 We selected the kit as a reliable mechanical starting point, but we did not keep its original component layout. Its acrylic plate had limited usable space and mounting holes intended mainly for an Arduino. Our Raspberry Pi, power system, camera, motor controller, and sensors required a new structure, so we designed a custom middle plate and an upper electronics layer.
 
 <p align="center">
@@ -135,7 +134,7 @@ We selected the kit as a reliable mechanical starting point, but we did not keep
 | Assembled height | 126 mm | Measured with the upper electronics layer installed | Confirms that the two-level design remains inside the height limit |
 | Wheelbase | 137 mm | Measured axle-to-axle distance | Used in steering-angle calculations |
 | Front track width | 117 mm | Measured between the front wheel centerlines | Used to calculate different inner and outer steering angles |
-| Wheel diameter | 64 mm | Measured wheel diameter | Determines distance travelled per wheel revolution |
+| Wheel diameter | 64 mm | Published wheel diameter | Determines distance travelled per wheel revolution |
 | Ground clearance | 19 mm | Measured from the ground to the lowest chassis surface | Reduces the chance of the plate catching on small field irregularities |
 
 <p align="center">
@@ -154,17 +153,6 @@ Height margin = 300 − 126 = 174 mm
 
 These are total envelope margins. They show that the second electronics layer and sensor mounts remain within the dimensional limit without requiring parts to be removed before inspection.
 
-### Wheel Geometry and Linear Travel
-
-With a measured wheel diameter of **64 mm**, the theoretical distance travelled by one complete wheel revolution is:
-
-$$C=\pi D=\pi(64)=201.1\text{ mm}$$
-
-Therefore, one wheel revolution corresponds to approximately **201 mm of linear travel** if tire slip is neglected. Once wheel speed $n$ is measured in revolutions per minute, the theoretical vehicle speed can be calculated using:
-
-$$v=\frac{\pi Dn}{60}$$
-
-where $D$ is expressed in metres and $v$ is obtained in metres per second. This relationship separates the known wheel geometry from motor speed, which must be measured under the robot's actual load rather than assumed from an unidentified motor rating.
 
 ### Field-Centering and Parking Geometry
 
@@ -199,11 +187,11 @@ After identifying the required components, we designed custom middle and top pla
 <table align="center">
   <tr>
     <td align="center">
-      <img src="image-4.png" alt="Early custom middle plate prototype" width="300" height="300"><br>
+      <img src="image-4.png" alt="middle plate" width="300" height="300"><br>
       <em>Early prototype</em>
     </td>
     <td align="center">
-      <img src="image-3.png" alt="Final custom top plate" width="300" height="300"><br>
+      <img src="image-3.png" alt="top plate" width="300" height="300"><br>
       <em>Final design</em>
     </td>
   </tr>
@@ -237,17 +225,6 @@ $$\frac{0.20}{0.12}=1.67$$
 or **67% more layers for the same part height**. We accepted the longer printing time because dimensional fit and clean mount features were more important than minimum production time for the final plates.
 
 Printer reference: [ELEGOO Centauri Carbon specifications](https://eu.elegoo.com/en-be/products/centauri-carbon).
-
-### Mechanical Design Trade-offs
-
-| Decision | Benefit | Trade-off |
-|---|---|---|
-| Rear-wheel drive with front steering | Car-like motion and compliance with the WRO mobility rules | Requires steering-link calibration and has a larger turning radius than differential drive |
-| Two-level electronics structure | Provides enough mounting area and improves component organization | Raises the assembled height and can raise the center of mass |
-| Rapid PETG printed plates | Tough functional parts that can be redesigned and reproduced | Printing at 0.12 mm takes longer, and dimensional errors require reprinting |
-| 25% gyroid infill with three walls | Balances stiffness and material use | Not as rigid as a fully solid plate |
-| Friction-fit ultrasonic mounts | Fast installation and removal without extra screws | Fit depends strongly on printing accuracy and material tolerance |
-| Rear ToF parking sensor | Direct rear-clearance measurement during parking | Adds a dedicated sensor and mount used only in the parking phase |
 
 ## Steering Calibration
 
@@ -321,7 +298,7 @@ The mount uses a **friction-fit mechanism** to hold the sensor without screws. T
 The camera requires a stable, repeatable position because a change in height or angle changes the apparent location of the traffic pillars. We designed a screw-mounted holder with an unobstructed lens opening.
 
 <p align="center">
-  <img src="image-10.png" alt="Pi Camera mount design" width="500"/>
+  <img src="image-11.png" alt="Pi Camera mount design" width="500"/>
   <br>
   <em>Custom camera mount on the second level at the front of the robot.</em>
 </p>
