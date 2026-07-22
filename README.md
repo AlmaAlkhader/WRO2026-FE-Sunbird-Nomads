@@ -358,7 +358,7 @@ The power switch energizes the drive system. A separate start control launches t
 | Raspberry Pi 3.3 V and GPIO | Ultrasonic and ToF sensor logic | Common ground through the breadboard negative rail |
 
 <p align="center">
-  <img src="wiring_setup.png" alt="A wiring diagram of the autonomous vehicle" width="900">
+  <img src="image-13.png" alt="A wiring diagram of the autonomous vehicle" width="900">
 </p>
 
 The Raspberry Pi 4 requires a good-quality **5 V, 3 A** USB-C supply according to its [official datasheet](https://pip.raspberrypi.com/documents/RP-008341-DS-raspberry-pi-4-datasheet.pdf). The power bank's labelled output matches that supply requirement.
